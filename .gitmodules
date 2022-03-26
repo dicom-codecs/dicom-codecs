@@ -1,0 +1,6 @@
+[submodule "extern/charls"]
+	path = extern/charls
+	url = https://github.com/team-charls/charls.git
+[submodule "extern/openjpeg"]
+	path = extern/openjpeg
+	url = https://github.com/uclouvain/openjpeg.git
