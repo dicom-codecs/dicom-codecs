@@ -22,6 +22,7 @@ set(LIBRARY_OUTPUT_PATH "")
 # END - Correct the bugs in the OpenJPEG CMakeLists.txt file here..
 
 add_subdirectory(extern/charls EXCLUDE_FROM_ALL)
+add_subdirectory(extern/libjpeg-turbo EXCLUDE_FROM_ALL)
 
 # The compiled library code is here
 add_subdirectory(src)

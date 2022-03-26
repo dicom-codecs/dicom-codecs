@@ -4,3 +4,6 @@
 [submodule "extern/openjpeg"]
 	path = extern/openjpeg
 	url = https://github.com/uclouvain/openjpeg.git
+[submodule "extern/libjpeg-turbo"]
+	path = extern/libjpeg-turbo
+	url = https://github.com/libjpeg-turbo/libjpeg-turbo.git

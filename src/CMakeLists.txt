@@ -8,7 +8,9 @@ add_library(dicomcodecs
     ${HEADER_LIST}
     lib.cpp 
     openjpeg/decoder.cpp
-    charls/decoder.cpp)
+    charls/decoder.cpp
+    libjpeg-turbo/decoder.cpp
+)
 
 # We need this directory, and users of our library will need it too
 target_include_directories(dicomcodecs PUBLIC ../include)
@@ -16,7 +18,9 @@ target_include_directories(dicomcodecs PUBLIC ../include)
 # This depends on (header only) boost
 target_link_libraries(dicomcodecs 
     PRIVATE openjp2
-    PRIVATE charls) 
+    PRIVATE charls
+    PRIVATE turbojpeg-static
+) 
 
 # All users of this library will need at least C++11
 target_compile_features(dicomcodecs PUBLIC cxx_std_11)

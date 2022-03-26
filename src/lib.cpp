@@ -4,6 +4,7 @@
 
 void charlsdecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage);
 void openjpegdecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage);
+void libjpegturbodecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage);
 
 
 void decode(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage, const std::string& codec) {
@@ -11,6 +12,8 @@ void decode(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targe
         return charlsdecoder(encodedBytes, targetImage);
     } else if(codec == "openjpeg") {
         return openjpegdecoder(encodedBytes, targetImage);
+    } else if(codec == "libjpeg-turbo") {
+        return libjpegturbodecoder(encodedBytes, targetImage);
     }
 
     throw "Unknown codec";
