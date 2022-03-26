@@ -7,8 +7,8 @@ file(GLOB HEADER_LIST CONFIGURE_DEPENDS "${dicomcodecs_SOURCE_DIR}/include/dicom
 add_library(dicomcodecs 
     ${HEADER_LIST}
     lib.cpp 
-    openjpegdecoder.cpp
-    charlsdecoder.cpp)
+    openjpeg/decoder.cpp
+    charls/decoder.cpp)
 
 # We need this directory, and users of our library will need it too
 target_include_directories(dicomcodecs PUBLIC ../include)

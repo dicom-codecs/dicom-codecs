@@ -1,5 +1,5 @@
 #include <charls/charls.h>
-#include "dicomcodecs/image.hpp"
+#include <dicomcodecs/image.hpp>
 
 void charlsdecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage) {
     charls::jpegls_decoder decoder;

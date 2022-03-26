@@ -10,8 +10,8 @@ void readFileAndDecode(const std::string& fileName, const std::string& codec, di
 {
     std::vector<uint8_t> encodedBytes;
     readFile(fileName, encodedBytes);
-    printf("Decoding %s\n", fileName.c_str());
-    decode(encodedBytes, image, "openjpeg");
+    printf("Decoding file %s with codec %s\n", fileName.c_str(), codec.c_str());
+    decode(encodedBytes, image, codec);
     printImage(image);
 
 }

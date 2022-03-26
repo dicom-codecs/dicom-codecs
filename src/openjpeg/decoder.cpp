@@ -2,14 +2,14 @@
 #include <memory>
 #include <limits.h>
 
-#include "openjpeg.h"
+#include <openjpeg.h>
 #include <string.h>
 #include <stdlib.h>
 #define J2K_MAGIC_NUMBER 0x51FF4FFF
 
-#include "dicomcodecs/image.hpp"
-#include "dicomcodecs/size.hpp"
-#include "openjpegbuffer.hpp"
+#include <dicomcodecs/image.hpp>
+#include <dicomcodecs/size.hpp>
+#include "buffer.hpp"
 
   static void error_callback(const char *msg, void *client_data) {
       (void)client_data;

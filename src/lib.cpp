@@ -1,5 +1,5 @@
 #include <vector>
-#include "dicomcodecs/codec.hpp"
+#include <dicomcodecs/codec.hpp>
 #include <string>
 
 void charlsdecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage);

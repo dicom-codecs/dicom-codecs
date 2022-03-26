@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "openjpeg.h"
+#include <openjpeg.h>
 
 typedef struct opj_buffer_info {
     OPJ_BYTE* buf;
