@@ -7,3 +7,9 @@
 [submodule "extern/libjpeg-turbo"]
 	path = extern/libjpeg-turbo
 	url = https://github.com/libjpeg-turbo/libjpeg-turbo.git
+[submodule "extern/ijg"]
+	path = extern/ijg
+	url = git@github.com:dicom-codecs/ijg.git
+[submodule "extern/test-data"]
+	path = extern/test-data
+	url = https://github.com/dicom-codecs/test-data.git

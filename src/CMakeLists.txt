@@ -1,4 +1,5 @@
 
+
 # Note that headers are optional, and do not affect add_library, but they will not
 # show up in IDEs unless they are listed in add_library.
 file(GLOB HEADER_LIST CONFIGURE_DEPENDS "${dicomcodecs_SOURCE_DIR}/include/dicomcodecs/*.hpp")
@@ -7,20 +8,25 @@ file(GLOB HEADER_LIST CONFIGURE_DEPENDS "${dicomcodecs_SOURCE_DIR}/include/dicom
 add_library(dicomcodecs 
     ${HEADER_LIST}
     lib.cpp 
+    libjpeg-turbo/decoder.cpp
     openjpeg/decoder.cpp
     charls/decoder.cpp
-    libjpeg-turbo/decoder.cpp
 )
+
 
 # We need this directory, and users of our library will need it too
 target_include_directories(dicomcodecs PUBLIC ../include)
 
 # This depends on (header only) boost
 target_link_libraries(dicomcodecs 
+    PRIVATE turbojpeg-static
     PRIVATE openjp2
     PRIVATE charls
-    PRIVATE turbojpeg-static
+    PRIVATE jpeg12
 ) 
+
+
+
 
 # All users of this library will need at least C++11
 target_compile_features(dicomcodecs PUBLIC cxx_std_11)
