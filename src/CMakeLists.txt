@@ -22,8 +22,8 @@ target_link_libraries(dicomcodecs
     PRIVATE turbojpeg-static
     PRIVATE openjp2
     PRIVATE charls
-    PRIVATE jpeg12
 ) 
+#PRIVATE jpeg12
 
 
 
