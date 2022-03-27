@@ -27,3 +27,9 @@ This project uses git submodules to pull in external codec linbraries, initializ
 To build:
 
 > ./build.sh
+
+## Development
+
+To update external dependencies to latest versions:
+
+> git submodule update --remote --merge
