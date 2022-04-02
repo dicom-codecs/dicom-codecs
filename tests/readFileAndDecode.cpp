@@ -8,10 +8,14 @@ void printImage(const dicomcodecs::image& image);
 
 void readFileAndDecode(const std::string& fileName, const std::string& codec, dicomcodecs::image& image)
 {
-    std::vector<uint8_t> encodedBytes;
-    readFile(fileName, encodedBytes);
-    printf("Decoding file %s with codec %s\n", fileName.c_str(), codec.c_str());
-    decode(encodedBytes, image, codec);
-    printImage(image);
+    try {
+        std::vector<uint8_t> encodedBytes;
+        readFile(fileName, encodedBytes);
+        printf("Decoding file %s with codec %s\n", fileName.c_str(), codec.c_str());
+        decode(encodedBytes, image, codec);
+        printImage(image);
+    } catch(const char* pError) {
+        printf("EXCEPTION: %s\n", pError);
+    }
 
 }

@@ -5,9 +5,7 @@
 void charlsdecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage);
 void openjpegdecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage);
 void libjpegturbodecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage);
-//void ijg12_decode(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage);
-int ijg12_decode(const char* fileName);
-
+int ijg12_decode(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage);
 
 void decode(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage, const std::string& codec) {
     if(codec == "charls") {
@@ -17,8 +15,8 @@ void decode(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targe
     } else if(codec == "libjpeg-turbo") {
         return libjpegturbodecoder(encodedBytes, targetImage);
     } else if(codec == "ijg") {
-        ijg12_decode("../ijg-old/tests/test12.jpg");
-        //return ijg12_decode(encodedBytes, targetImage);
+        ijg12_decode(encodedBytes, targetImage);
+        return;
     }
 
     throw "Unknown codec";

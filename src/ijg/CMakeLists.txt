@@ -83,6 +83,8 @@ add_library (ijg12
 target_compile_options(ijg12 PUBLIC -DBITS_IN_JSAMPLE=12)
 target_compile_options(ijg12 PUBLIC -iquote ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(ijg12 PUBLIC ${IJG_ROOT})
+target_compile_options(ijg12 PUBLIC -DNEED_SHORT_EXTERNAL_NAMES=12)
+
 
 #add_library (jpeg8
 #    lib.cpp

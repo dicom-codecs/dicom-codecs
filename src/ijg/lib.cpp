@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <jpeglib.h>
 #include <setjmp.h>
+#include <vector>
+#include "../../include/dicomcodecs/image.hpp"
 
 struct my_error_mgr {
   struct jpeg_error_mgr pub;	/* "public" fields */
@@ -29,9 +31,9 @@ my_error_exit (j_common_ptr cinfo)
   longjmp(myerr->setjmp_buffer, 1);
 }
 
-int ijg12_decode(const char* fileName) {
-  
-  /* This struct contains the JPEG decompression parameters and pointers to
+void ijg12_decode(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage) {
+
+ /* This struct contains the JPEG decompression parameters and pointers to
    * working space (which is allocated as needed by the JPEG library).
    */
   struct jpeg_decompress_struct cinfo;
@@ -41,7 +43,6 @@ int ijg12_decode(const char* fileName) {
    */
   struct my_error_mgr jerr;
   /* More stuff */
-  FILE * infile;		/* source file */
   JSAMPARRAY buffer;		/* Output row buffer */
   int row_stride;		/* physical row width in output buffer */
 
@@ -50,11 +51,6 @@ int ijg12_decode(const char* fileName) {
    * VERY IMPORTANT: use "b" option to fopen() if you are on a machine that
    * requires it in order to read binary files.
    */
-
-  if ((infile = fopen(fileName, "rb")) == NULL) {
-    fprintf(stderr, "can't open %s\n", fileName);
-    return 0;
-  }
 
   /* Step 1: allocate and initialize JPEG decompression object */
 
@@ -67,15 +63,15 @@ int ijg12_decode(const char* fileName) {
      * We need to clean up the JPEG object, close the input file, and return.
      */
     jpeg_destroy_decompress(&cinfo);
-    fclose(infile);
-    return 0;
+    throw "ijg decode error";
   }
   /* Now we can initialize the JPEG decompression object. */
   jpeg_create_decompress(&cinfo);
 
   /* Step 2: specify data source (eg, a file) */
 
-  jpeg_stdio_src(&cinfo, infile);
+  //jpeg_stdio_src(&cinfo, infile);
+  jpeg_mem_src(&cinfo,encodedBytes.data(), encodedBytes.size());
 
   /* Step 3: read file parameters with jpeg_read_header() */
 
@@ -99,6 +95,13 @@ int ijg12_decode(const char* fileName) {
    * with the stdio data source.
    */
 
+  targetImage.width = cinfo.output_width;
+  targetImage.height = cinfo.output_height;
+  targetImage.bitsPerSample = 12;
+  targetImage.componentCount = cinfo.num_components;
+  targetImage.isSigned = true;
+
+
   /* We may need to do some setup of our own at this point before reading
    * the data.  After jpeg_start_decompress() we have the correct scaled
    * output image dimensions available, as well as the output colormap
@@ -112,7 +115,11 @@ int ijg12_decode(const char* fileName) {
   buffer = (*cinfo.mem->alloc_sarray)
 		((j_common_ptr) &cinfo, JPOOL_IMAGE, row_stride, 1);
 
-  short* pBuffer = new short[cinfo.output_width * cinfo.output_components * cinfo.output_height];
+  targetImage.rawBytes.resize(cinfo.output_width * cinfo.output_components * cinfo.output_height * sizeof(short));
+
+
+  //short* pBuffer = new short[cinfo.output_width * cinfo.output_components * cinfo.output_height];
+  short* pBuffer = (short*)targetImage.rawBytes.data();
   /* Step 6: while (scan lines remain to be read) */
   /*           jpeg_read_scanlines(...); */
 
@@ -126,7 +133,7 @@ int ijg12_decode(const char* fileName) {
      */
     buffer[0] = pBuffer + (row_stride * cinfo.output_scanline);
 
-    printf("%d\n", cinfo.output_scanline);
+    //printf("%d\n", cinfo.output_scanline);
     (void) jpeg_read_scanlines(&cinfo, buffer, 1);
     /* Assume put_scanline_someplace wants a pointer and sample count. */
     //put_scanline_someplace(buffer[0], row_stride);
@@ -149,12 +156,11 @@ int ijg12_decode(const char* fileName) {
    * so as to simplify the setjmp error logic above.  (Actually, I don't
    * think that jpeg_destroy can do an error exit, but why assume anything...)
    */
-  fclose(infile);
+  //fclose(infile);
 
   /* At this point you may want to check to see whether any corrupt-data
    * warnings occurred (test whether jerr.pub.num_warnings is nonzero).
    */
 
   /* And we're done! */
-  return 1;
 }

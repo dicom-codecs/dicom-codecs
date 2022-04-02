@@ -19,10 +19,10 @@ target_include_directories(dicomcodecs PUBLIC ../include)
 
 # This depends on (header only) boost
 target_link_libraries(dicomcodecs 
+    PRIVATE jpeg12
     PRIVATE turbojpeg-static
     PRIVATE openjp2
     PRIVATE charls
-    PRIVATE jpeg12
 ) 
 
 
