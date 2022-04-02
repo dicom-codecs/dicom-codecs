@@ -1,6 +1,7 @@
 #include <vector>
 #include <dicomcodecs/codec.hpp>
 #include <string>
+#include <map>
 
 void charlsdecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage);
 void charlsencoder(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & encodedBytes);
@@ -9,52 +10,52 @@ void openjpegdecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs::ima
 void libjpegturbodecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage);
 void ijg12_decode(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage);
 
-void decode(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage, const std::string& codec) {
+std::map<std::string, decoder_ptr> decoders;
+std::map<std::string, encoder_ptr> encoders;
 
+int registerDecoder(const std::string codec, decoder_ptr decoder) {
+    printf("decoder registered for %s\n", codec.c_str());
+    decoders[codec] = decoder;
+    return 0;
+}
+
+int registerEncoder(const std::string codec, encoder_ptr encoder) {
+    printf("encoder registered for %s\n", codec.c_str());
+    encoders[codec] = encoder;
+    return 0;
+}
+
+void init() {
 #ifdef DICOM_CODECS_BUILD_CHARLS
-    if(codec == "charls") {
-        return charlsdecoder(encodedBytes, targetImage);
-    }
+    registerDecoder("charls", charlsdecoder);
+    registerEncoder("charls", charlsencoder);
 #endif
 #ifdef DICOM_CODECS_BUILD_OPENJPEG
-    if(codec == "openjpeg") {
-        return openjpegdecoder(encodedBytes, targetImage);
-    }
+    registerDecoder("openjpeg", openjpegdecoder);
+    //registerEncoder("openjpeg", openjpegencoder);
 #endif
 #ifdef DICOM_CODECS_BUILD_LIBJPEGTURBO
-    if(codec == "libjpeg-turbo") {
-        return libjpegturbodecoder(encodedBytes, targetImage);
-    } 
+    registerDecoder("libjpeg-turbo", libjpegturbodecoder);
+    //registerEncoder("libjpeg-turbo", libjpegturboencoder);
 #endif
 #ifdef DICOM_CODECS_BUILD_IJG
-    if(codec == "ijg12") {
-        return ijg12_decode(encodedBytes, targetImage);
-    }
+    registerDecoder("ijg12", ijg12_decode);
+    //registerEncoder("ijg12", ijg12_encode);
 #endif
-    throw "Unknown codec";
+}
+
+void decode(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage, const std::string& codec) {
+    decoder_ptr decoder = decoders[codec];
+    if(decoder == 0) {
+        throw "Unknown codec";
+    }
+    return (*decoder)(encodedBytes, targetImage);
 }
 
 void encode(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & encodedBytes, const std::string& codec) {
-
-#ifdef DICOM_CODECS_BUILD_CHARLS
-    if(codec == "charls") {
-        return charlsencoder(sourceImage, encodedBytes);
+    encoder_ptr encoder = encoders[codec];
+    if(encoder == 0) {
+        throw "Unknown codec";
     }
-#endif
-#ifdef DICOM_CODECS_BUILD_OPENJPEG
-    if(codec == "openjpeg") {
-        return openjpegdecoder(encodedBytes, targetImage);
-    }
-#endif
-#ifdef DICOM_CODECS_BUILD_LIBJPEGTURBO
-    if(codec == "libjpeg-turbo") {
-        return libjpegturbodecoder(encodedBytes, targetImage);
-    } 
-#endif
-#ifdef DICOM_CODECS_BUILD_IJG
-    if(codec == "ijg12") {
-        return ijg12_decode(encodedBytes, targetImage);
-    }
-#endif
-    throw "Unknown codec";
+    return (*encoder)(sourceImage, encodedBytes);
 }

@@ -3,11 +3,11 @@
 void readFile(std::string fileName, std::vector<uint8_t>& vec);
 void printImage(const dicomcodecs::image& image);
 void readFileAndDecode(const std::string& fileName, const std::string& codec, dicomcodecs::image& image);
-//void readRawFileAndEncode(const std::string& fileName, dicomcodecs::image& image, const std::string& targetCodec);
 
 int main(int argc, char** argv) 
 {
     dicomcodecs::image image;
+    init();
 
     readFileAndDecode("../../chafey/charls-js/test/fixtures/jls/CT1.JLS", "charls", image);
     std::vector<uint8_t> encodedBytes;

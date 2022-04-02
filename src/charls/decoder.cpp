@@ -4,9 +4,7 @@
 void charlsdecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage) {
     charls::jpegls_decoder decoder;
     decoder.source(encodedBytes);
-    
     decoder.read_header();
-
     int32_t nearLossless_ = decoder.near_lossless();
     charls::interleave_mode interleaveMode_ = decoder.interleave_mode();
     charls::frame_info frameInfo = decoder.frame_info();
@@ -18,4 +16,3 @@ void charlsdecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image
     targetImage.rawBytes.resize(destination_size);
     decoder.decode(targetImage.rawBytes);
 }
-    
