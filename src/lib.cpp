@@ -7,8 +7,13 @@ void charlsdecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image
 void charlsencoder(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & encodedBytes);
 
 void openjpegdecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage);
+void openjpegencoder(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & encodedBytes);
+
 void libjpegturbodecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage);
+void libjpegturboencoder(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & encodedBytes);
+
 void ijg12_decode(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage);
+void ijg12_encoder(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & encodedBytes);
 
 std::map<std::string, decoder_ptr> decoders;
 std::map<std::string, encoder_ptr> encoders;
@@ -36,7 +41,7 @@ void init() {
 #endif
 #ifdef DICOM_CODECS_BUILD_LIBJPEGTURBO
     registerDecoder("libjpeg-turbo", libjpegturbodecoder);
-    //registerEncoder("libjpeg-turbo", libjpegturboencoder);
+    registerEncoder("libjpeg-turbo", libjpegturboencoder);
 #endif
 #ifdef DICOM_CODECS_BUILD_IJG
     registerDecoder("ijg12", ijg12_decode);

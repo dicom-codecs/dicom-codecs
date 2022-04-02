@@ -13,7 +13,7 @@ set(CHARLS_SOURCES "charls/decoder.cpp"  "charls/encoder.cpp")
 endif(DICOM_CODECS_BUILD_CHARLS)
 
 if(DICOM_CODECS_BUILD_LIBJPEGTURBO)
-set(LIBJPEGTURBO_SOURCES "libjpeg-turbo/decoder.cpp")
+set(LIBJPEGTURBO_SOURCES "libjpeg-turbo/decoder.cpp" "libjpeg-turbo/encoder.cpp")
 endif(DICOM_CODECS_BUILD_LIBJPEGTURBO)
 
 # Make an automatic library - will be static or dynamic based on user setting
