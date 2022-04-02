@@ -37,6 +37,28 @@ namespace dicomcodecs
         /// the raw bytes for the underlying pixel data
         /// </summary>
         std::vector<uint8_t> rawBytes;
+
+        /// <summary>
+        /// equal operator
+        /// </summary>
+        inline bool operator== (const image& rhs) const { 
+            return (width == rhs.width &&
+                height == rhs.height &&
+                width == rhs.width &&
+                bitsPerSample == rhs.bitsPerSample &&
+                componentCount == rhs.componentCount &&
+                isSigned == rhs.isSigned &&
+                rawBytes == rhs.rawBytes
+            );
+        }
+
+        /// <summary>
+        /// not equal operator
+        /// </summary>
+        inline bool operator!= (const image& rhs) const { 
+            return !(*this == rhs);
+        }
+
     };
 
 }

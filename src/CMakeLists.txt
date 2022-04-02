@@ -9,7 +9,7 @@ set(OPENJPEG_SOURCES "openjpeg/decoder.cpp")
 endif(DICOM_CODECS_BUILD_OPENJPEG)
 
 if(DICOM_CODECS_BUILD_CHARLS)
-set(CHARLS_SOURCES "charls/decoder.cpp")
+set(CHARLS_SOURCES "charls/decoder.cpp"  "charls/encoder.cpp")
 endif(DICOM_CODECS_BUILD_CHARLS)
 
 if(DICOM_CODECS_BUILD_LIBJPEGTURBO)
