@@ -14,7 +14,7 @@ void decode(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targe
         return openjpegdecoder(encodedBytes, targetImage);
     } else if(codec == "libjpeg-turbo") {
         return libjpegturbodecoder(encodedBytes, targetImage);
-    } else if(codec == "ijg") {
+    } else if(codec == "ijg12") {
         return ijg12_decode(encodedBytes, targetImage);
     }
 
