@@ -13,20 +13,16 @@ add_library(dicomcodecs
     charls/decoder.cpp
 )
 
-
 # We need this directory, and users of our library will need it too
 target_include_directories(dicomcodecs PUBLIC ../include)
 
 # This depends on (header only) boost
 target_link_libraries(dicomcodecs 
-    PRIVATE jpeg12
-    PRIVATE turbojpeg-static
     PRIVATE openjp2
     PRIVATE charls
+    PRIVATE turbojpeg-static
+    PRIVATE jpeg12
 ) 
-
-
-
 
 # All users of this library will need at least C++11
 target_compile_features(dicomcodecs PUBLIC cxx_std_11)

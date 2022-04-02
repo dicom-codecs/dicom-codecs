@@ -10,9 +10,8 @@ int main(int argc, char** argv)
 
     readFileAndDecode("../../chafey/charls-js/test/fixtures/jls/CT1.JLS", "charls", image);
     readFileAndDecode("../../chafey/openjpegjs/test/fixtures/j2k/CT1.j2k", "openjpeg", image);
-    readFileAndDecode("../../chafey/openjphjs/test/fixtures/j2c/CT1.j2c", "openjpeg", image);
+    //readFileAndDecode("../../chafey/openjphjs/test/fixtures/j2c/CT1.j2c", "openjpeg", image);
     readFileAndDecode("extern/libjpeg-turbo/testimages/testorig.jpg", "libjpeg-turbo", image);
-    readFileAndDecode("/Users/chafey/src/github/dicom-codecs/ijg-old/tests/test12.jpg", "ijg", image); // does not work due to symbol collision with libturbo-jpeg :(
-
+    readFileAndDecode("/Users/chafey/src/github/dicom-codecs/ijg-old/tests/test12.jpg", "ijg", image);
     return 0;
 }

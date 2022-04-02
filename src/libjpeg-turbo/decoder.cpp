@@ -12,9 +12,11 @@ void libjpegturbodecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs:
     int width, height, inSubsamp, inColorspace;
     unsigned long jpegSize = (unsigned long)encodedBytes.size();
 
-    if (tjDecompressHeader3(tjInstance, encodedBytes.data(), jpegSize, &width, &height,
-                            &inSubsamp, &inColorspace) < 0) {
-        return;
+    int result = tjDecompressHeader3(tjInstance, encodedBytes.data(), jpegSize, &width, &height,
+                            &inSubsamp, &inColorspace);
+    if(result < 0) {
+        printf("tjDecompressHeader3() returned %d\n", result);
+        throw("reading header\n");
     }
 
     targetImage.width = width;
@@ -31,7 +33,7 @@ void libjpegturbodecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs:
     if (tjDecompress2(tjInstance, encodedBytes.data(), encodedBytes.size(), targetImage.rawBytes.data(), 
         targetImage.width, 0, targetImage.height, pixelFormat, 0) < 0) {
         tjDestroy(tjInstance);
-        throw("~~decompressing JPEG image\n");
+        throw("decompressing JPEG image\n");
     }
 
     tjDestroy(tjInstance);
