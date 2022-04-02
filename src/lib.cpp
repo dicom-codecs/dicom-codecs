@@ -8,15 +8,26 @@ void libjpegturbodecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs:
 void ijg12_decode(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage);
 
 void decode(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage, const std::string& codec) {
+
+#ifdef DICOM_CODECS_BUILD_CHARLS
     if(codec == "charls") {
         return charlsdecoder(encodedBytes, targetImage);
-    } else if(codec == "openjpeg") {
+    }
+#endif
+#ifdef DICOM_CODECS_BUILD_OPENJPEG
+    if(codec == "openjpeg") {
         return openjpegdecoder(encodedBytes, targetImage);
-    } else if(codec == "libjpeg-turbo") {
+    }
+#endif
+#ifdef DICOM_CODECS_BUILD_LIBJPEGTURBO
+    if(codec == "libjpeg-turbo") {
         return libjpegturbodecoder(encodedBytes, targetImage);
-    } else if(codec == "ijg12") {
+    } 
+#endif
+#ifdef DICOM_CODECS_BUILD_IJG
+    if(codec == "ijg12") {
         return ijg12_decode(encodedBytes, targetImage);
     }
-
+#endif
     throw "Unknown codec";
 }
