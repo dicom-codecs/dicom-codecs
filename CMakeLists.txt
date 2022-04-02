@@ -16,7 +16,7 @@ set(BUILD_SHARED_LIBS OFF)
 set(BUILD_STATIC_LIBS ON)
 
 # options to control whether or not we build specific libraries.  This allows users to easily add just the codecs they want
-option(DICOM_CODECS_BUILD_OPENJPEG "Build OpenJPEG" OFF)
+option(DICOM_CODECS_BUILD_OPENJPEG "Build OpenJPEG" ON)
 option(DICOM_CODECS_BUILD_CHARLS "Build CharLS" ON)
 option(DICOM_CODECS_BUILD_LIBJPEGTURBO "Build libjpeg-turbo 8 bit" ON)
 option(DICOM_CODECS_BUILD_IJG "Build IJG 12 bit" OFF)

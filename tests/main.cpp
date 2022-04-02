@@ -28,11 +28,9 @@ void readFileAndRoundTrip(const std::string& fileName, const std::string& codec)
 
 int main(int argc, char** argv) 
 {
-    dicomcodecs::image image;
     init();
-
     readFileAndRoundTrip("../../chafey/charls-js/test/fixtures/jls/CT1.JLS", "charls");
-    //readFileAndDecode("../../chafey/openjpegjs/test/fixtures/j2k/CT1.j2k", "openjpeg", image);
+    readFileAndRoundTrip("../../chafey/openjpegjs/test/fixtures/j2k/CT1.j2k", "openjpeg");
     readFileAndRoundTrip("extern/libjpeg-turbo/testimages/testorig.jpg", "libjpeg-turbo");
     //readFileAndDecode("/Users/chafey/src/github/dicom-codecs/ijg-old/tests/test12.jpg", "ijg12", image);
 

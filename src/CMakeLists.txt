@@ -5,7 +5,7 @@
 file(GLOB HEADER_LIST CONFIGURE_DEPENDS "${dicomcodecs_SOURCE_DIR}/include/dicomcodecs/*.hpp")
 
 if(DICOM_CODECS_BUILD_OPENJPEG)
-set(OPENJPEG_SOURCES "openjpeg/decoder.cpp")
+set(OPENJPEG_SOURCES "openjpeg/decoder.cpp" "openjpeg/encoder.cpp" "openjpeg/buffer.cpp")
 endif(DICOM_CODECS_BUILD_OPENJPEG)
 
 if(DICOM_CODECS_BUILD_CHARLS)

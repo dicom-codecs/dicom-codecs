@@ -37,7 +37,7 @@ void init() {
 #endif
 #ifdef DICOM_CODECS_BUILD_OPENJPEG
     registerDecoder("openjpeg", openjpegdecoder);
-    //registerEncoder("openjpeg", openjpegencoder);
+    registerEncoder("openjpeg", openjpegencoder);
 #endif
 #ifdef DICOM_CODECS_BUILD_LIBJPEGTURBO
     registerDecoder("libjpeg-turbo", libjpegturbodecoder);
