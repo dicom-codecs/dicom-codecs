@@ -13,7 +13,7 @@ void libjpegturbodecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs:
 void libjpegturboencoder(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & encodedBytes);
 
 void ijg12_decode(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage);
-void ijg12_encoder(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & encodedBytes);
+void ijg12_encode(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & encodedBytes);
 
 std::map<std::string, decoder_ptr> decoders;
 std::map<std::string, encoder_ptr> encoders;
@@ -45,7 +45,7 @@ void init() {
 #endif
 #ifdef DICOM_CODECS_BUILD_IJG
     registerDecoder("ijg12", ijg12_decode);
-    //registerEncoder("ijg12", ijg12_encode);
+    registerEncoder("ijg12", ijg12_encode);
 #endif
 }
 

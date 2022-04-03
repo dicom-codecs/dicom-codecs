@@ -19,7 +19,7 @@ set(BUILD_STATIC_LIBS ON)
 option(DICOM_CODECS_BUILD_OPENJPEG "Build OpenJPEG" ON)
 option(DICOM_CODECS_BUILD_CHARLS "Build CharLS" ON)
 option(DICOM_CODECS_BUILD_LIBJPEGTURBO "Build libjpeg-turbo 8 bit" ON)
-option(DICOM_CODECS_BUILD_IJG "Build IJG 12 bit" OFF)
+option(DICOM_CODECS_BUILD_IJG "Build IJG 12 bit" ON)
 
 if(DICOM_CODECS_BUILD_OPENJPEG)
   # NOTE - Add OpenJPEG first since its CMakeLists.txt messes variables up that impact other projects

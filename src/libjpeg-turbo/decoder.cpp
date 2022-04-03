@@ -6,6 +6,8 @@
 void libjpegturbodecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage) {
     tjhandle tjInstance = NULL;
     if ((tjInstance = tjInitDecompress()) == NULL) {
+        const char* error = tjGetErrorStr2(tjInstance);
+        printf("tjInitDecompress() failed: %s\n", error);
         throw("initializing decompressor\n");
     }
     
@@ -15,7 +17,8 @@ void libjpegturbodecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs:
     int result = tjDecompressHeader3(tjInstance, encodedBytes.data(), jpegSize, &width, &height,
                             &inSubsamp, &inColorspace);
     if(result < 0) {
-        printf("tjDecompressHeader3() returned %d\n", result);
+        const char* error = tjGetErrorStr2(tjInstance);
+        printf("tjDecompressHeader3() failed: %s\n", error);
         throw("reading header\n");
     }
 
@@ -33,6 +36,8 @@ void libjpegturbodecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs:
     if (tjDecompress2(tjInstance, encodedBytes.data(), encodedBytes.size(), targetImage.rawBytes.data(), 
         targetImage.width, 0, targetImage.height, pixelFormat, 0) < 0) {
         tjDestroy(tjInstance);
+        const char* error = tjGetErrorStr2(tjInstance);
+        printf("tjDecompress2() failed: %s\n", error);
         throw("decompressing JPEG image\n");
     }
 
