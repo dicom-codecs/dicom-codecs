@@ -14,9 +14,16 @@ Implemented Codecs:
 * ijg - JPEG Baseline (Processes 2 & 4 - 12 bit) (1.2.840.10008.1.2.4.51 ) )
 
 TODO:
-* RLE Lossless (1.2.840.10008.1.2.5 RLE Lossless) - from ??
-* JPEG Lossless, Nonhierarchical (Processes 14) (1.2.840.10008.1.2.4.57) - from ??
-* JPEG Lossless, Nonhierarchical (Processes 14 [Selection 1]) (1.2.840.10008.1.2.4.70) - from ??
+* Add codec ?? for RLE Lossless (1.2.840.10008.1.2.5 RLE Lossless)
+* Add codec ?? for JPEG Lossless, Nonhierarchical (Processes 14) (1.2.840.10008.1.2.4.57)
+* Add codec ?? for JPEG Lossless, Nonhierarchical (Processes 14 [Selection 1]) (1.2.840.10008.1.2.4.70)
+* Add codec openjph for HTJ2K decoding
+* Add codec libjxl for JPEG-XL decoding
+* Add codec Kakadujs for J2K/HTJ2K decoding
+* Add support for codec specific options (e.g. JPEG quality, J2K progression order, etc)
+* throw dicomcodecs::exception for all failure cases
+* refactor encoder and decoder from ijg/lib.cpp into separate files
+* refactor ijg so CMakelists.txt is ourside of src directory (maybe in a separate repo via extern, or a /lib folder)
 
 ## Building
 

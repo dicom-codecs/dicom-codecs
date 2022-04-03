@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "../../extern/libjpeg-turbo/turbojpeg.h"
 #include <dicomcodecs/image.hpp>
+#include <dicomcodecs/exception.hpp>
 
 void libjpegturboencoder(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & encodedBytes) {
     // HACK: presize the encoded buffer to the decoded size to make sure we have
@@ -9,8 +10,7 @@ void libjpegturboencoder(const dicomcodecs::image& sourceImage, std::vector<uint
     tjhandle tjInstance = NULL;
     if ((tjInstance = tjInitCompress()) == NULL) {
         const char* error = tjGetErrorStr2(tjInstance);
-        printf("tjInitCompress() failed: %s\n", error);
-        throw("initializing compressor");
+        throw dicomcodecs::exception("libjpegturbo", error);
     }
 
     int progressive_(1);
@@ -33,9 +33,7 @@ void libjpegturboencoder(const dicomcodecs::image& sourceImage, std::vector<uint
     if (tjCompress2(tjInstance, sourceImage.rawBytes.data(), sourceImage.width, 0, sourceImage.height, pixelFormat,
                     &jpegBuf, &jpegSize, outSubsamp, quality_, flags) < 0) {
         const char* error = tjGetErrorStr2(tjInstance);
-        printf("tjCompress2() failed: %s\n", error);
-
-      throw("compressing image");
+        throw dicomcodecs::exception("libjpegturbo", error);
     }
 
     encodedBytes.resize(jpegSize);

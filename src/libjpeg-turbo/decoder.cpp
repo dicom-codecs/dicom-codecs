@@ -2,13 +2,14 @@
 #include "../../extern/libjpeg-turbo/turbojpeg.h"
 
 #include <dicomcodecs/image.hpp>
+#include <dicomcodecs/exception.hpp>
 
 void libjpegturbodecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage) {
     tjhandle tjInstance = NULL;
     if ((tjInstance = tjInitDecompress()) == NULL) {
         const char* error = tjGetErrorStr2(tjInstance);
-        printf("tjInitDecompress() failed: %s\n", error);
-        throw("initializing decompressor\n");
+        //printf("tjInitDecompress() failed: %s\n", error);
+        throw dicomcodecs::exception("libjpegturbo", error);
     }
     
     int width, height, inSubsamp, inColorspace;
@@ -18,8 +19,7 @@ void libjpegturbodecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs:
                             &inSubsamp, &inColorspace);
     if(result < 0) {
         const char* error = tjGetErrorStr2(tjInstance);
-        printf("tjDecompressHeader3() failed: %s\n", error);
-        throw("reading header\n");
+        throw dicomcodecs::exception("libjpegturbo", error);
     }
 
     targetImage.width = width;
@@ -37,8 +37,7 @@ void libjpegturbodecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs:
         targetImage.width, 0, targetImage.height, pixelFormat, 0) < 0) {
         tjDestroy(tjInstance);
         const char* error = tjGetErrorStr2(tjInstance);
-        printf("tjDecompress2() failed: %s\n", error);
-        throw("decompressing JPEG image\n");
+        throw dicomcodecs::exception("libjpegturbo", error);
     }
 
     tjDestroy(tjInstance);

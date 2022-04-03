@@ -4,6 +4,7 @@
 #include <setjmp.h>
 #include <vector>
 #include "../../include/dicomcodecs/image.hpp"
+#include "../../include/dicomcodecs/exception.hpp"
 
 struct my_error_mgr {
   struct jpeg_error_mgr pub;	/* "public" fields */
@@ -63,7 +64,7 @@ void ijg12_decode(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image&
      * We need to clean up the JPEG object, close the input file, and return.
      */
     jpeg_destroy_decompress(&cinfo);
-    throw "ijg decode error";
+    throw dicomcodecs::exception("ijg12", "decode error");
   }
   /* Now we can initialize the JPEG decompression object. */
   jpeg_create_decompress(&cinfo);

@@ -70,6 +70,15 @@
         "iostream": "cpp",
         "numeric": "cpp",
         "random": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "__tree": "cpp",
+        "cinttypes": "cpp",
+        "codecvt": "cpp",
+        "csetjmp": "cpp",
+        "csignal": "cpp",
+        "list": "cpp",
+        "map": "cpp",
+        "strstream": "cpp",
+        "format": "cpp"
     }
 }
