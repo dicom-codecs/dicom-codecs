@@ -7,7 +7,7 @@ void roundTrip(const dicomcodecs::image& image, const std::string& codec, double
     encode(image, encodedBytes, codec);
     dicomcodecs::image decodedImage;
     decode(encodedBytes, decodedImage, codec);
-    printImage(decodedImage);
+    //printImage(decodedImage);
 
     if(decodedImage != image) {
         size_t numDifferences = 0;

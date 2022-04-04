@@ -6,7 +6,9 @@
 void readFile(std::string fileName, std::vector<uint8_t>& vec) {
     // open the file:
     std::ifstream file(fileName, std::ios::binary);
-
+    if(file.fail()){
+        throw std::runtime_error("file does not exist");
+    }
     // Stop eating new lines in binary mode!!!
     file.unsetf(std::ios::skipws);
 

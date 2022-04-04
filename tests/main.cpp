@@ -5,23 +5,31 @@ void printImage(const dicomcodecs::image& image);
 void readFileAndDecode(const std::string& fileName, const std::string& codec, dicomcodecs::image& image);
 void roundTrip(const dicomcodecs::image& image, const std::string& codec, double maxAverageDiff = 0.0);
 void readFileAndRoundTrip(const std::string& fileName, const std::string& codec, double maxAverageDiff = 0.0);
-void benchmark(dicomcodecs::image& image, const std::string& codec, size_t iterations);
+void benchmark(dicomcodecs::image& image, const std::string& comment, const std::string& codec, size_t iterations);
 std::string makeRawFileName(const char* name, const dicomcodecs::image& image);
 void writeFile(const std::string fileName, const std::vector<uint8_t>& vec);
-void readRawFile(const std::string fileName, dicomcodecs::image& image);
-
+std::string readRawFile(const std::string filePath, dicomcodecs::image& image);
+void makeRawImages();
+void readRawFileAndRoundTrip(const std::string& fileName, const std::string& codec, double maxAverageDiff = 0.0);
 
 void roundTripTests() {
-    readFileAndRoundTrip("extern/test-data/jpegls/CT1.JLS", "charls");
-    readFileAndRoundTrip("extern/test-data/jpeg2000/CT1.j2k", "openjpeg");
-    readFileAndRoundTrip("extern/test-data/jpeglossy8bit/jpeg400jfif.jpg", "libjpeg-turbo", 2.0);
-    readFileAndRoundTrip("extern/test-data/jpeglossy12bit/test12.jpg", "ijg12", 2.0);
+    //readRawFileAndRoundTrip("extern/test-data/raw/CT1-512-512-1-16-0.raw", "charls");
+    //readRawFileAndRoundTrip("extern/test-data/raw/CT1-512-512-1-16-0.raw", "openjpeg");
+    
+    //readRawFileAndRoundTrip("extern/test-data/raw/jpeg400jfif-600-800-1-8-0.raw", "charls");
+    //readRawFileAndRoundTrip("extern/test-data/raw/jpeg400jfif-600-800-1-8-0.raw", "openjpeg");
+    //readRawFileAndRoundTrip("extern/test-data/raw/jpeg400jfif-600-800-1-8-0.raw", "libjpeg-turbo",2.0);
+    readRawFileAndRoundTrip("extern/test-data/raw/jpeg400jfif-600-800-1-8-0.raw", "ijg12", 2.0);
+
+    //readFileAndRoundTrip("extern/test-data/jpeg2000/CT1.j2k", "openjpeg");
+    //readFileAndRoundTrip("extern/test-data/jpeglossy8bit/jpeg400jfif.jpg", "libjpeg-turbo", 2.0);
+    //readFileAndRoundTrip("extern/test-data/jpeglossy12bit/test12.jpg", "ijg12", 2.0);
 }
 
 void benchmarkRawFilePath(const std::string& filePath, const std::string& codec, size_t iterations) {
     dicomcodecs::image image;
-    readRawFile(filePath, image);
-    benchmark(image, codec, iterations);
+    std::string fileName = readRawFile(filePath, image);
+    benchmark(image, fileName, codec, iterations);
 }
 
 void benchmarkTests() {
@@ -42,83 +50,14 @@ void benchmarkTests() {
     benchmarkRawFilePath("extern/test-data/raw/SC1-2048-2487-1-12-0.raw", codec, iterations);
 }
 
-void makeRawImages() {
-    printf("** Creating Raw Images **\n");
-    dicomcodecs::image image;
-    std::string fileName;
-    readFileAndDecode("extern/test-data/jpegls/CT1.JLS", "charls", image);
-    fileName = makeRawFileName("extern/test-data/raw/CT1", image);
-    printf("%s\n", fileName.c_str());
-    writeFile(fileName, image.rawBytes);
-
-    readFileAndDecode("extern/test-data/jpegls/CT2.JLS", "charls", image);
-    fileName = makeRawFileName("extern/test-data/raw/CT2", image);
-    printf("%s\n", fileName.c_str());
-    writeFile(fileName, image.rawBytes);
-
-    readFileAndDecode("extern/test-data/jpegls/MG1.JLS", "charls", image);
-    fileName = makeRawFileName("extern/test-data/raw/MG1", image);
-    printf("%s\n", fileName.c_str());
-    writeFile(fileName, image.rawBytes);
-
-/*    readFileAndDecode("extern/test-data/jpegls/MR1.JLS", "charls", image);
-    fileName = makeRawFileName("extern/test-data/raw/MR1", image);
-    printf("%s\n", fileName.c_str());
-    writeFile(fileName, image.rawBytes);
-*/
-    readFileAndDecode("extern/test-data/jpegls/MR2.JLS", "charls", image);
-    fileName = makeRawFileName("extern/test-data/raw/MR2", image);
-    printf("%s\n", fileName.c_str());
-    writeFile(fileName, image.rawBytes);
-
-    readFileAndDecode("extern/test-data/jpegls/MR3.JLS", "charls", image);
-    fileName = makeRawFileName("extern/test-data/raw/MR3", image);
-    printf("%s\n", fileName.c_str());
-    writeFile(fileName, image.rawBytes);
-
-    readFileAndDecode("extern/test-data/jpegls/MR4.JLS", "charls", image);
-    fileName = makeRawFileName("extern/test-data/raw/MR4", image);
-    printf("%s\n", fileName.c_str());
-    writeFile(fileName, image.rawBytes);
-
-    readFileAndDecode("extern/test-data/jpegls/NM1.JLS", "charls", image);
-    fileName = makeRawFileName("extern/test-data/raw/NM1", image);
-    printf("%s\n", fileName.c_str());
-    writeFile(fileName, image.rawBytes);
-
-    readFileAndDecode("extern/test-data/jpegls/RG1.JLS", "charls", image);
-    fileName = makeRawFileName("extern/test-data/raw/RG1", image);
-    printf("%s\n", fileName.c_str());
-    writeFile(fileName, image.rawBytes);
-
-    readFileAndDecode("extern/test-data/jpegls/RG2.JLS", "charls", image);
-    fileName = makeRawFileName("extern/test-data/raw/RG2", image);
-    printf("%s\n", fileName.c_str());
-    writeFile(fileName, image.rawBytes);
-
-    readFileAndDecode("extern/test-data/jpegls/RG3.JLS", "charls", image);
-    fileName = makeRawFileName("extern/test-data/raw/RG3", image);
-    printf("%s\n", fileName.c_str());
-    writeFile(fileName, image.rawBytes);
-
-    readFileAndDecode("extern/test-data/jpegls/SC1.JLS", "charls", image);
-    fileName = makeRawFileName("extern/test-data/raw/SC1", image);
-    printf("%s\n", fileName.c_str());
-    writeFile(fileName, image.rawBytes);
-
-    readFileAndDecode("extern/test-data/jpegls/XA1.JLS", "charls", image);
-    fileName = makeRawFileName("extern/test-data/raw/XA1", image);
-    printf("%s\n", fileName.c_str());
-    writeFile(fileName, image.rawBytes);
-}
 
 int main(int argc, char** argv) 
 {
     init();
 
     //makeRawImages();
-    //roundTripTests();
-    benchmarkTests();
+    roundTripTests();
+    //benchmarkTests();
 
     //readFileAndDecode("../../chafey/openjphjs/test/fixtures/j2c/CT1.j2c", "openjpeg", image); // HTJ2K
 

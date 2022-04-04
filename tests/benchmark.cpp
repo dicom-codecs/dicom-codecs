@@ -6,7 +6,7 @@
 #include <iostream>
 #include "timer.hpp"
 
-void benchmarkEncode(dicomcodecs::image& image, const std::string& codec, size_t iterations) {
+void benchmarkEncode(dicomcodecs::image& image, const std::string& comment, const std::string& codec, size_t iterations) {
     Timer timer;
     std::vector<uint8_t> encodedBytes;
     timer.start();
@@ -15,10 +15,10 @@ void benchmarkEncode(dicomcodecs::image& image, const std::string& codec, size_t
     }
     double totalMS = timer.end();
     double averageMS = totalMS / iterations;
-    printf("Encode %s - average time of %0.2f ms (%zu iterations)\n", codec.c_str(), averageMS, iterations);
+    printf("Encode %s with %s - average time of %0.2f ms (%zu iterations)\n", codec.c_str(), comment.c_str(), averageMS, iterations);
 }
 
-void benchmarkDecode(dicomcodecs::image& image, const std::string& codec, size_t iterations) {
+void benchmarkDecode(dicomcodecs::image& image, const std::string& comment, const std::string& codec, size_t iterations) {
     Timer timer;
 
     std::vector<uint8_t> encodedBytes;
@@ -31,11 +31,11 @@ void benchmarkDecode(dicomcodecs::image& image, const std::string& codec, size_t
     }
     double totalMS = timer.end();
     double averageMS = totalMS / iterations;
-    printf("Decode %s - average time of %0.2f ms(%zu iterations)\n", codec.c_str(), averageMS, iterations);
+    printf("Decode %s with %s - average time of %0.2f ms(%zu iterations)\n", codec.c_str(), comment.c_str(), averageMS, iterations);
 }
 
-void benchmark(dicomcodecs::image& image, const std::string& codec, size_t iterations)
+void benchmark(dicomcodecs::image& image, const std::string& comment, const std::string& codec, size_t iterations)
 {
-    benchmarkEncode(image, codec, iterations);
-    benchmarkDecode(image, codec, iterations);
+    benchmarkEncode(image, comment, codec, iterations);
+    benchmarkDecode(image, comment, codec, iterations);
 }

@@ -11,6 +11,8 @@ add_executable(cpptest
     writeFile.cpp
     readRawFile.cpp
     makeRawFileName.cpp
+    makeRawImages.cpp
+    readRawFileAndRoundTrip.cpp
 )
 
 # Should be linked to the main library, as well as the Catch2 testing library

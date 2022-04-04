@@ -15,9 +15,9 @@ std::string parseToken(const std::string str, size_t& start) {
     return token;
 }
 
-void readRawFile(const std::string filePath, dicomcodecs::image& image) {
+std::string readRawFile(const std::string filePath, dicomcodecs::image& image) {
     size_t fileNameEnd = filePath.rfind("."); // find extension
-    size_t fileNameStart = filePath.rfind("/"); // find last directory separator
+    size_t fileNameStart = filePath.rfind("/") + 1; // find last directory separator
     std::string fileName = filePath.substr(fileNameStart, fileNameEnd-fileNameStart);
     size_t start = 0;
     std::string name = parseToken(fileName, start);
@@ -27,4 +27,5 @@ void readRawFile(const std::string filePath, dicomcodecs::image& image) {
     image.bitsPerSample = stoi(parseToken(fileName, start));
     image.isSigned = stoi(parseToken(fileName, start));
     readFile(filePath, image.rawBytes);
+    return fileName;
 }

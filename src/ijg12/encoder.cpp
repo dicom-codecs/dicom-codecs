@@ -54,7 +54,8 @@ void ijg12_encode(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & 
   //  exit(1);
   //}
   //jpeg_stdio_dest(&cinfo, outfile);
-  encodedBytes.resize(sourceImage.rawBytes.size());
+  size_t maxBufferSize = sourceImage.width * sourceImage.height * sourceImage.componentCount * 2;
+  encodedBytes.resize(maxBufferSize);
   size_t outsize = encodedBytes.size();
   unsigned char* pData = encodedBytes.data();
   jpeg_mem_dest(&cinfo, &pData, &outsize);
@@ -97,14 +98,28 @@ void ijg12_encode(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & 
    * To keep things simple, we pass one scanline per call; you can pass
    * more if you wish, though.
    */
-  row_stride = sourceImage.width * sourceImage.componentCount * sizeof(short);	/* JSAMPLEs per row in image_buffer */
+    //
+  std::vector<short> rawDataAsShorts;
+  short* pIn;
+  if(sourceImage.bitsPerSample <= 8) {
+      size_t numPixels = sourceImage.height * sourceImage.width * sourceImage.componentCount;
+      rawDataAsShorts.resize(numPixels);
+      for(int i=0; i < numPixels; i++) {
+          rawDataAsShorts[i] = sourceImage.rawBytes[i];
+      }
+      pIn = rawDataAsShorts.data();
+  } else {
+      pIn = (short*)sourceImage.rawBytes.data();
+  }
+
+  row_stride = sourceImage.width * sourceImage.componentCount;
 
   while (cinfo.next_scanline < cinfo.image_height) {
     /* jpeg_write_scanlines expects an array of pointers to scanlines.
      * Here the array is only one element long, but you could pass
      * more than one scanline at a time if that's more convenient.
      */
-    row_pointer[0] = (short*)(sourceImage.rawBytes.data() + (cinfo.next_scanline * row_stride));
+    row_pointer[0] = (pIn + (cinfo.next_scanline * row_stride));
     (void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
   }
 
