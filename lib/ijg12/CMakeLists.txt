@@ -86,15 +86,3 @@ target_include_directories(ijg12 PUBLIC ${IJG_ROOT})
 target_compile_options(ijg12 PUBLIC -DNEED_SHORT_EXTERNAL_NAMES) # this is to prevent symbol conflicts withj libjpeg-turbo
 
 
-#add_library (jpeg8
-#    lib.cpp
-#)
-#target_link_libraries(jpeg8 PRIVATE ijg8)
-#target_include_directories(jpeg8 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-
-
-add_library (jpeg12
-    lib.cpp
-)
-target_link_libraries(jpeg12 PRIVATE ijg12)
-target_include_directories(jpeg12 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

@@ -43,7 +43,7 @@ void init() {
     registerDecoder("libjpeg-turbo", libjpegturbodecoder);
     registerEncoder("libjpeg-turbo", libjpegturboencoder);
 #endif
-#ifdef DICOM_CODECS_BUILD_IJG
+#ifdef DICOM_CODECS_BUILD_IJG12
     registerDecoder("ijg12", ijg12_decode);
     registerEncoder("ijg12", ijg12_encode);
 #endif

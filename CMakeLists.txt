@@ -16,10 +16,10 @@ set(BUILD_SHARED_LIBS OFF)
 set(BUILD_STATIC_LIBS ON)
 
 # options to control whether or not we build specific libraries.  This allows users to easily add just the codecs they want
-option(DICOM_CODECS_BUILD_OPENJPEG "Build OpenJPEG" ON)
+option(DICOM_CODECS_BUILD_OPENJPEG "Build OpenJPEG" OFF)
 option(DICOM_CODECS_BUILD_CHARLS "Build CharLS" ON)
-option(DICOM_CODECS_BUILD_LIBJPEGTURBO "Build libjpeg-turbo 8 bit" ON)
-option(DICOM_CODECS_BUILD_IJG "Build IJG 12 bit" ON)
+option(DICOM_CODECS_BUILD_LIBJPEGTURBO "Build libjpeg-turbo 8 bit" OFF)
+option(DICOM_CODECS_BUILD_IJG12 "Build IJG 12 bit" ON)
 
 if(DICOM_CODECS_BUILD_OPENJPEG)
   # NOTE - Add OpenJPEG first since its CMakeLists.txt messes variables up that impact other projects
@@ -35,9 +35,9 @@ if(DICOM_CODECS_BUILD_CHARLS)
   add_subdirectory(extern/charls EXCLUDE_FROM_ALL)
 endif(DICOM_CODECS_BUILD_CHARLS)
 
-if(DICOM_CODECS_BUILD_IJG)
-  add_subdirectory(src/ijg EXCLUDE_FROM_ALL)
-endif(DICOM_CODECS_BUILD_IJG)
+if(DICOM_CODECS_BUILD_IJG12)
+  add_subdirectory(lib/ijg12 EXCLUDE_FROM_ALL)
+endif(DICOM_CODECS_BUILD_IJG12)
 
 if(DICOM_CODECS_BUILD_LIBJPEGTURBO)
   add_subdirectory(extern/libjpeg-turbo EXCLUDE_FROM_ALL)

@@ -16,6 +16,10 @@ if(DICOM_CODECS_BUILD_LIBJPEGTURBO)
 set(LIBJPEGTURBO_SOURCES "libjpeg-turbo/decoder.cpp" "libjpeg-turbo/encoder.cpp")
 endif(DICOM_CODECS_BUILD_LIBJPEGTURBO)
 
+if(DICOM_CODECS_BUILD_IJG12)
+set(IJG12_SOURCES "ijg12/encoder.cpp" "ijg12/decoder.cpp")
+endif(DICOM_CODECS_BUILD_IJG12)
+
 # Make an automatic library - will be static or dynamic based on user setting
 add_library(dicomcodecs 
     ${HEADER_LIST}
@@ -23,6 +27,7 @@ add_library(dicomcodecs
     ${OPENJPEG_SOURCES} 
     ${CHARLS_SOURCES} 
     ${LIBJPEGTURBO_SOURCES} 
+    ${IJG12_SOURCES}
 )
 
 # We need this directory, and users of our library will need it too
@@ -44,17 +49,10 @@ target_link_libraries(dicomcodecs PRIVATE turbojpeg-static)
 target_compile_options(dicomcodecs PUBLIC -DDICOM_CODECS_BUILD_LIBJPEGTURBO)
 endif(DICOM_CODECS_BUILD_LIBJPEGTURBO)
 
-if(DICOM_CODECS_BUILD_IJG)
-target_link_libraries(dicomcodecs PRIVATE jpeg12)
-target_compile_options(dicomcodecs PUBLIC -DDICOM_CODECS_BUILD_IJG)
-endif(DICOM_CODECS_BUILD_IJG)
-
-#target_link_libraries(dicomcodecs 
-#    PRIVATE openjp2
-#    PRIVATE charls
-#    PRIVATE turbojpeg-static
-#    PRIVATE jpeg12
-#) 
+if(DICOM_CODECS_BUILD_IJG12)
+target_link_libraries(dicomcodecs PRIVATE ijg12)
+target_compile_options(dicomcodecs PUBLIC -DDICOM_CODECS_BUILD_IJG12)
+endif(DICOM_CODECS_BUILD_IJG12)
 
 # All users of this library will need at least C++11
 target_compile_features(dicomcodecs PUBLIC cxx_std_11)
