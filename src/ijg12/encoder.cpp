@@ -3,8 +3,8 @@
 #include <jpeglib.h>
 #include <setjmp.h>
 #include <vector>
-#include "../../include/dicomcodecs/image.hpp"
-#include "../../include/dicomcodecs/exception.hpp"
+#include <dicomcodecs/image.hpp>
+#include <dicomcodecs/exception.hpp>
 
 void ijg12_encode(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & encodedBytes) {
   int quality = 100;

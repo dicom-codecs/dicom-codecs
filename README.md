@@ -21,7 +21,7 @@ TODO:
 * Add codec libjxl for JPEG-XL
 * Add codec Kakadujs for J2K/HTJ2K
 * Add codec GROK for J2K
-* Add codec for RAW images
+* Add support for reading/writing to raw files
 * Add support for codec specific options (e.g. JPEG quality, J2K progression order, etc)
 * throw dicomcodecs::exception for all failure cases
 * Add support for getting the codec version

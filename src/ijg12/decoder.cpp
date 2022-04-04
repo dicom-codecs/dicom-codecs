@@ -3,8 +3,8 @@
 #include <jpeglib.h>
 #include <setjmp.h>
 #include <vector>
-#include "../../include/dicomcodecs/image.hpp"
-#include "../../include/dicomcodecs/exception.hpp"
+#include <dicomcodecs/image.hpp>
+#include <dicomcodecs/exception.hpp>
 
 struct my_error_mgr {
   struct jpeg_error_mgr pub;	/* "public" fields */

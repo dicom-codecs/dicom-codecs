@@ -31,6 +31,7 @@ int registerEncoder(const std::string codec, encoder_ptr encoder) {
 }
 
 void init() {
+
 #ifdef DICOM_CODECS_BUILD_CHARLS
     registerDecoder("charls", charlsdecoder);
     registerEncoder("charls", charlsencoder);

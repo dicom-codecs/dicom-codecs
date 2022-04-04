@@ -7,7 +7,11 @@ add_executable(cpptest
     printImage.cpp
     roundTrip.cpp
     readFileAndRoundTrip.cpp
-    benchmark.cpp)
+    benchmark.cpp
+    writeFile.cpp
+    readRawFile.cpp
+    makeRawFileName.cpp
+)
 
 # Should be linked to the main library, as well as the Catch2 testing library
 target_link_libraries(cpptest PRIVATE dicomcodecs)
