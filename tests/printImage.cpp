@@ -1,4 +1,5 @@
 #include <dicomcodecs/image.hpp>
+#include <stdio.h>
 
 void printImage(const dicomcodecs::image& image) {
     printf("width = %d\n", image.width);

@@ -1,6 +1,6 @@
 #include <exception>
 #include <string>
-#include <format>
+#include <string.h>
 
 namespace dicomcodecs
 {

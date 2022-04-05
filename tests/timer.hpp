@@ -17,6 +17,6 @@ class Timer {
     }
     
 private:
-    std::chrono::steady_clock::time_point start_;
-    std::chrono::steady_clock::time_point end_;
+    std::chrono::time_point<std::chrono::high_resolution_clock> start_;
+    std::chrono::time_point<std::chrono::high_resolution_clock> end_;
 };
