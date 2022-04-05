@@ -1,5 +1,5 @@
 
-set(IJG_ROOT "${CMAKE_SOURCE_DIR}/extern/ijg")
+set(IJG_ROOT "${PROJECT_SOURCE_DIR}/extern/ijg")
 
 set(PUBLIC_HEADERS
 "${IJG_ROOT}/jpeglib.h"

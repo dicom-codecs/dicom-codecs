@@ -2,7 +2,7 @@
 
 # Note that headers are optional, and do not affect add_library, but they will not
 # show up in IDEs unless they are listed in add_library.
-file(GLOB HEADER_LIST CONFIGURE_DEPENDS "${dicomcodecs_SOURCE_DIR}/include/dicomcodecs/*.hpp")
+file(GLOB HEADER_LIST CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/include/dicomcodecs/*.hpp")
 
 if(DICOM_CODECS_BUILD_OPENJPEG)
 set(OPENJPEG_SOURCES "openjpeg/decoder.cpp" "openjpeg/encoder.cpp" "openjpeg/buffer.cpp")
@@ -57,7 +57,7 @@ endif(DICOM_CODECS_BUILD_IJG12)
 # All users of this library will need at least C++11
 target_compile_features(dicomcodecs PUBLIC cxx_std_11)
 
-include_directories("../extern/openjpeg/src/lib/openjp2" "../build/extern/openjpeg/src/lib/openjp2")
+include_directories("${PROJECT_SOURCE_DIR}/extern/openjpeg/src/lib/openjp2" "${OPENJPEG_BINARY_DIR}/src/lib/openjp2")
 
 # IDEs should put the headers in a nice place
 #source_group(TREE "${PROJECT_SOURCE_DIR}/include" PREFIX "Header Files" FILES ${HEADER_LIST})
