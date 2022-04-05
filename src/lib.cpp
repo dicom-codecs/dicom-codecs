@@ -1,67 +1,85 @@
-#include <vector>
-#include <dicomcodecs/codec.hpp>
-#include <string>
 #include <map>
+#include <string>
+#include <vector>
 
-void charlsdecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage);
-void charlsencoder(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & encodedBytes);
+#include <dicomcodecs/codec.hpp>
+#include <dicomcodecs/exception.hpp>
 
-void openjpegdecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage);
-void openjpegencoder(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & encodedBytes);
+using namespace dicomcodecs;
+using namespace std;
 
-void libjpegturbodecoder(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage);
-void libjpegturboencoder(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & encodedBytes);
+void charlsdecoder(const vector<uint8_t> &encodedBytes, image &targetImage);
+void charlsencoder(const image &sourceImage, vector<uint8_t> &encodedBytes);
 
-void ijg12_decode(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage);
-void ijg12_encode(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & encodedBytes);
+void openjpegdecoder(const vector<uint8_t> &encodedBytes, image &targetImage);
+void openjpegencoder(const image &sourceImage, vector<uint8_t> &encodedBytes);
 
-std::map<std::string, decoder_ptr> decoders;
-std::map<std::string, encoder_ptr> encoders;
+void libjpegturbodecoder(const vector<uint8_t> &encodedBytes,
+                         image &targetImage);
+void libjpegturboencoder(const image &sourceImage,
+                         vector<uint8_t> &encodedBytes);
 
-int registerDecoder(const std::string codec, decoder_ptr decoder) {
-    printf("decoder registered for %s\n", codec.c_str());
-    decoders[codec] = decoder;
-    return 0;
+void ijg12_decode(const vector<uint8_t> &encodedBytes, image &targetImage);
+void ijg12_encode(const image &sourceImage, vector<uint8_t> &encodedBytes);
+
+void rledecoder(const vector<uint8_t> &encodedBytes, image &targetImage);
+void rleencoder(const image &sourceImage, vector<uint8_t> &encodedBytes);
+
+map<string, decoder_ptr> decoders;
+map<string, encoder_ptr> encoders;
+
+int registerDecoder(const string codec, decoder_ptr decoder) {
+  printf("decoder registered for %s\n", codec.c_str());
+  decoders[codec] = decoder;
+  return 0;
 }
 
-int registerEncoder(const std::string codec, encoder_ptr encoder) {
-    printf("encoder registered for %s\n", codec.c_str());
-    encoders[codec] = encoder;
-    return 0;
+int registerEncoder(const string codec, encoder_ptr encoder) {
+  printf("encoder registered for %s\n", codec.c_str());
+  encoders[codec] = encoder;
+  return 0;
 }
 
 void init() {
 
 #ifdef DICOM_CODECS_BUILD_CHARLS
-    registerDecoder("charls", charlsdecoder);
-    registerEncoder("charls", charlsencoder);
+  registerDecoder("charls", charlsdecoder);
+  registerEncoder("charls", charlsencoder);
 #endif
 #ifdef DICOM_CODECS_BUILD_OPENJPEG
-    registerDecoder("openjpeg", openjpegdecoder);
-    registerEncoder("openjpeg", openjpegencoder);
+  registerDecoder("openjpeg", openjpegdecoder);
+  registerEncoder("openjpeg", openjpegencoder);
 #endif
 #ifdef DICOM_CODECS_BUILD_LIBJPEGTURBO
-    registerDecoder("libjpeg-turbo", libjpegturbodecoder);
-    registerEncoder("libjpeg-turbo", libjpegturboencoder);
+  registerDecoder("libjpeg-turbo", libjpegturbodecoder);
+  registerEncoder("libjpeg-turbo", libjpegturboencoder);
 #endif
 #ifdef DICOM_CODECS_BUILD_IJG12
-    registerDecoder("ijg12", ijg12_decode);
-    registerEncoder("ijg12", ijg12_encode);
+  registerDecoder("ijg12", ijg12_decode);
+  registerEncoder("ijg12", ijg12_encode);
+#endif
+#ifdef DICOM_CODECS_BUILD_RLE
+  registerDecoder("rle", rledecoder);
+  registerEncoder("rle", rleencoder);
 #endif
 }
 
-void decode(const std::vector<uint8_t> & encodedBytes, dicomcodecs::image& targetImage, const std::string& codec) {
-    decoder_ptr decoder = decoders[codec];
-    if(decoder == 0) {
-        throw "Unknown codec";
-    }
-    return (*decoder)(encodedBytes, targetImage);
+void decode(const vector<uint8_t> &encodedBytes, image &targetImage,
+            const string &codec) {
+  decoder_ptr decoder = decoders[codec];
+  if (decoder == 0) {
+    throw dicom_codec_exception(codec.c_str(), "Unknown codec");
+  }
+
+  return (*decoder)(encodedBytes, targetImage);
 }
 
-void encode(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & encodedBytes, const std::string& codec) {
-    encoder_ptr encoder = encoders[codec];
-    if(encoder == 0) {
-        throw "Unknown codec";
-    }
-    return (*encoder)(sourceImage, encodedBytes);
+void encode(const image &sourceImage, vector<uint8_t> &encodedBytes,
+            const string &codec) {
+  encoder_ptr encoder = encoders[codec];
+  if (encoder == 0) {
+    throw dicom_codec_exception(codec.c_str(), "Unknown codec");
+  }
+
+  return (*encoder)(sourceImage, encodedBytes);
 }
