@@ -27,9 +27,9 @@ static void info_callback(const char *msg, void *client_data) {
   printf("[INFO] %s", msg);
 }
 
-size calculateSizeAtDecompositionLevel(const image &imageFrame,
+dicomcodecs::size calculateSizeAtDecompositionLevel(const image &imageFrame,
                                        int decompositionLevel) {
-  size result(imageFrame.width, imageFrame.height);
+  dicomcodecs::size result(imageFrame.width, imageFrame.height);
   while (decompositionLevel--) {
     result.width = (((result.width + 2) - 1) / 2);
     result.height = (((result.height + 2) - 1) / 2);
@@ -124,7 +124,7 @@ void openjpegdecoder(const vector<uint8_t> &encodedBytes, image &targetImage) {
 
   // calculate the resolution at the requested decomposition level and
   // allocate destination buffer
-  size sizeAtDecompositionLevel =
+  dicomcodecs::size sizeAtDecompositionLevel =
       calculateSizeAtDecompositionLevel(targetImage, decompositionLevel);
   const size_t bytesPerPixel = (targetImage.bitsPerSample + 8 - 1) / 8;
   const size_t destinationSize = targetImage.width * targetImage.height *

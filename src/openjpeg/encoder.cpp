@@ -42,10 +42,10 @@ void openjpegencoder(const image &sourceImage, vector<uint8_t> &encodedBytes) {
 
   vector<point> downSamples_;
   point imageOffset_;
-  size tileSize_;
+  dicomcodecs::size tileSize_;
   point tileOffset_;
-  size blockDimensions_(64, 64);
-  vector<size> precincts_;
+  dicomcodecs::size blockDimensions_(64, 64);
+  vector<dicomcodecs::size> precincts_;
 
   opj_cparameters_t parameters; /* compression parameters */
   opj_stream_t *l_stream = 00;
@@ -60,7 +60,6 @@ void openjpegencoder(const image &sourceImage, vector<uint8_t> &encodedBytes) {
   /* initialize image components */
   for (int i = 0; i < sourceImage.componentCount; i++) {
     cmptparm[i].prec = (OPJ_UINT32)sourceImage.bitsPerSample;
-    cmptparm[i].bpp = (OPJ_UINT32)sourceImage.bitsPerSample;
     cmptparm[i].sgnd = (OPJ_UINT32)sourceImage.isSigned;
     cmptparm[i].dx = 1; //(OPJ_UINT32)(subsampling_dx * raw_cp->rawComps[i].dx);
     cmptparm[i].dy = 1; //(OPJ_UINT32)(subsampling_dy * raw_cp->rawComps[i].dy);
