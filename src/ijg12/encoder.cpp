@@ -1,12 +1,15 @@
-#include <stddef.h> 
-#include <stdio.h>
+#include <dicomcodecs/exception.hpp>
+#include <dicomcodecs/image.hpp>
 #include <jpeglib.h>
 #include <setjmp.h>
+#include <stddef.h>
+#include <stdio.h>
 #include <vector>
-#include <dicomcodecs/image.hpp>
-#include <dicomcodecs/exception.hpp>
 
-void ijg12_encode(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & encodedBytes) {
+using namespace dicomcodecs;
+using namespace std;
+
+void ijg12_encode(const image &sourceImage, vector<uint8_t> &encodedBytes) {
   int quality = 100;
 
   /* This struct contains the JPEG compression parameters and pointers to
@@ -26,9 +29,9 @@ void ijg12_encode(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & 
    */
   struct jpeg_error_mgr jerr;
   /* More stuff */
-  //FILE * outfile;		/* target file */
-  JSAMPROW row_pointer[1];	/* pointer to JSAMPLE row[s] */
-  int row_stride;		/* physical row width in image buffer */
+  // FILE * outfile;		/* target file */
+  JSAMPROW row_pointer[1]; /* pointer to JSAMPLE row[s] */
+  int row_stride;          /* physical row width in image buffer */
 
   /* Step 1: allocate and initialize JPEG compression object */
 
@@ -49,15 +52,16 @@ void ijg12_encode(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & 
    * VERY IMPORTANT: use "b" option to fopen() if you are on a machine that
    * requires it in order to write binary files.
    */
-  //if ((outfile = fopen(filename, "wb")) == NULL) {
+  // if ((outfile = fopen(filename, "wb")) == NULL) {
   //  fprintf(stderr, "can't open %s\n", filename);
   //  exit(1);
   //}
-  //jpeg_stdio_dest(&cinfo, outfile);
-  size_t maxBufferSize = sourceImage.width * sourceImage.height * sourceImage.componentCount * 2;
+  // jpeg_stdio_dest(&cinfo, outfile);
+  size_t maxBufferSize =
+      sourceImage.width * sourceImage.height * sourceImage.componentCount * 2;
   encodedBytes.resize(maxBufferSize);
   size_t outsize = encodedBytes.size();
-  unsigned char* pData = encodedBytes.data();
+  unsigned char *pData = encodedBytes.data();
   jpeg_mem_dest(&cinfo, &pData, &outsize);
 
   /* Step 3: set parameters for compression */
@@ -65,13 +69,14 @@ void ijg12_encode(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & 
   /* First we supply a description of the input image.
    * Four fields of the cinfo struct must be filled in:
    */
-  cinfo.image_width = sourceImage.width; 	/* image width and height, in pixels */
+  cinfo.image_width = sourceImage.width; /* image width and height, in pixels */
   cinfo.image_height = sourceImage.height;
-  cinfo.input_components = sourceImage.componentCount;		/* # of color components per pixel */
-  if(sourceImage.componentCount == 1) {
-    cinfo.in_color_space = JCS_GRAYSCALE; 	/* colorspace of input image */
+  cinfo.input_components =
+      sourceImage.componentCount; /* # of color components per pixel */
+  if (sourceImage.componentCount == 1) {
+    cinfo.in_color_space = JCS_GRAYSCALE; /* colorspace of input image */
   } else {
-    cinfo.in_color_space = JCS_RGB; 	/* colorspace of input image */
+    cinfo.in_color_space = JCS_RGB; /* colorspace of input image */
   }
   /* Now use the library's routine to set default compression parameters.
    * (You must set at least cinfo.in_color_space before calling this,
@@ -98,18 +103,19 @@ void ijg12_encode(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & 
    * To keep things simple, we pass one scanline per call; you can pass
    * more if you wish, though.
    */
-    //
+  //
   std::vector<short> rawDataAsShorts;
-  short* pIn;
-  if(sourceImage.bitsPerSample <= 8) {
-      size_t numPixels = sourceImage.height * sourceImage.width * sourceImage.componentCount;
-      rawDataAsShorts.resize(numPixels);
-      for(int i=0; i < numPixels; i++) {
-          rawDataAsShorts[i] = sourceImage.rawBytes[i];
-      }
-      pIn = rawDataAsShorts.data();
+  short *pIn;
+  if (sourceImage.bitsPerSample <= 8) {
+    size_t numPixels =
+        sourceImage.height * sourceImage.width * sourceImage.componentCount;
+    rawDataAsShorts.resize(numPixels);
+    for (int i = 0; i < numPixels; i++) {
+      rawDataAsShorts[i] = sourceImage.rawBytes[i];
+    }
+    pIn = rawDataAsShorts.data();
   } else {
-      pIn = (short*)sourceImage.rawBytes.data();
+    pIn = (short *)sourceImage.rawBytes.data();
   }
 
   row_stride = sourceImage.width * sourceImage.componentCount;
@@ -120,14 +126,14 @@ void ijg12_encode(const dicomcodecs::image& sourceImage, std::vector<uint8_t> & 
      * more than one scanline at a time if that's more convenient.
      */
     row_pointer[0] = (pIn + (cinfo.next_scanline * row_stride));
-    (void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
+    (void)jpeg_write_scanlines(&cinfo, row_pointer, 1);
   }
 
   /* Step 6: Finish compression */
 
   jpeg_finish_compress(&cinfo);
   /* After finish_compress, we can close the output file. */
-  //fclose(outfile);
+  // fclose(outfile);
 
   /* Step 7: release JPEG compression object */
 

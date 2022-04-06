@@ -20,6 +20,10 @@ if(DICOM_CODECS_BUILD_IJG12)
 set(IJG12_SOURCES "ijg12/encoder.cpp" "ijg12/decoder.cpp")
 endif(DICOM_CODECS_BUILD_IJG12)
 
+if(DICOM_CODECS_BUILD_RLE)
+set(RLE_SOURCES "rle/decoder.cpp"  "rle/encoder.cpp")
+endif(DICOM_CODECS_BUILD_RLE)
+
 # Make an automatic library - will be static or dynamic based on user setting
 add_library(dicomcodecs 
     ${HEADER_LIST}
@@ -28,6 +32,7 @@ add_library(dicomcodecs
     ${CHARLS_SOURCES} 
     ${LIBJPEGTURBO_SOURCES} 
     ${IJG12_SOURCES}
+    ${RLE_SOURCES} 
 )
 
 # We need this directory, and users of our library will need it too
@@ -53,6 +58,10 @@ if(DICOM_CODECS_BUILD_IJG12)
 target_link_libraries(dicomcodecs PRIVATE ijg12)
 target_compile_options(dicomcodecs PUBLIC -DDICOM_CODECS_BUILD_IJG12)
 endif(DICOM_CODECS_BUILD_IJG12)
+
+if(DICOM_CODECS_BUILD_RLE)
+target_compile_options(dicomcodecs PUBLIC -DDICOM_CODECS_BUILD_RLE)
+endif(DICOM_CODECS_BUILD_RLE)
 
 # All users of this library will need at least C++11
 target_compile_features(dicomcodecs PUBLIC cxx_std_11)

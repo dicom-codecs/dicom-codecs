@@ -1,17 +1,21 @@
 #include <dicomcodecs/codec.hpp>
 
-void roundTrip(const dicomcodecs::image& image, const std::string& codec, double maxAverageDiff = 0.0);
-std::string readRawFile(const std::string filePath, dicomcodecs::image& image);
+using namespace dicomcodecs;
+using namespace std;
 
-void readRawFileAndRoundTrip(const std::string& fileName, const std::string& codec, double maxAverageDiff = 0.0) {
-    try {
-        printf("------BEGIN\n");
-        dicomcodecs::image image;
-        readRawFile(fileName, image);
-        roundTrip(image, codec, maxAverageDiff);
-        printf("------END\n");
-    }
-    catch(const char* err) {
-        printf("EXCEPTION: %s\n", err);
-    }
+void roundTrip(const image &image, const string &codec,
+               double maxAverageDiff = 0.0);
+string readRawFile(const string filePath, image &image);
+
+void readRawFileAndRoundTrip(const string &fileName, const string &codec,
+                             double maxAverageDiff = 0.0) {
+  try {
+    printf("------BEGIN\n");
+    image image;
+    readRawFile(fileName, image);
+    roundTrip(image, codec, maxAverageDiff);
+    printf("------END\n");
+  } catch (const char *err) {
+    printf("EXCEPTION: %s\n", err);
+  }
 }

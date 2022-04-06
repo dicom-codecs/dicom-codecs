@@ -1,11 +1,15 @@
+#include <dicomcodecs/image.hpp>
+#include <exception>
 #include <string>
 #include <vector>
-#include <exception>
-#include <dicomcodecs/image.hpp>
 
-std::string makeRawFileName(const char* name, const dicomcodecs::image& image) {
+using namespace dicomcodecs;
+using namespace std;
 
-    char fileName[128];
-    sprintf(fileName, "%s-%d-%d-%d-%d-%d.raw", name, image.width, image.height, image.componentCount, image.bitsPerSample, image.isSigned);
-    return fileName;
+string makeRawFileName(const char *name, const image &image) {
+  char fileName[128];
+  sprintf(fileName, "%s-%d-%d-%d-%d-%d.raw", name, image.width, image.height,
+          image.componentCount, image.bitsPerSample, image.isSigned);
+  
+  return fileName;
 }

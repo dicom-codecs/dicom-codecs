@@ -1,28 +1,29 @@
 #include <fstream>
 #include <iostream>
-#include <vector>
 #include <iterator>
+#include <vector>
 
-void readFile(std::string fileName, std::vector<uint8_t>& vec) {
-    // open the file:
-    std::ifstream file(fileName, std::ios::binary);
-    if(file.fail()){
-        throw std::runtime_error("file does not exist");
-    }
-    // Stop eating new lines in binary mode!!!
-    file.unsetf(std::ios::skipws);
+using namespace std;
 
-    // get its size:
-    std::streampos fileSize;
-    file.seekg(0, std::ios::end);
-    fileSize = file.tellg();
-    file.seekg(0, std::ios::beg);
+void readFile(string fileName, vector<uint8_t> &vec) {
+  // open the file:
+  ifstream file(fileName, ios::binary);
+  if (file.fail()) {
+    throw runtime_error("file does not exist (" + fileName + ")");
+  }
+  // Stop eating new lines in binary mode!!!
+  file.unsetf(ios::skipws);
 
-    // reserve capacity
-    vec.reserve(fileSize);
+  // get its size:
+  streampos fileSize;
+  file.seekg(0, ios::end);
+  fileSize = file.tellg();
+  file.seekg(0, ios::beg);
 
-    // read the data:
-    vec.insert(vec.begin(),
-                std::istream_iterator<uint8_t>(file),
-                std::istream_iterator<uint8_t>());
+  // reserve capacity
+  vec.reserve(fileSize);
+
+  // read the data:
+  vec.insert(vec.begin(), istream_iterator<uint8_t>(file),
+             istream_iterator<uint8_t>());
 }
