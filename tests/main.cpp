@@ -16,9 +16,9 @@ void roundTripTests() {
     //readRawFileAndRoundTrip("extern/test-data/raw/CT1-512-512-1-16-0.raw", "charls");
     //readRawFileAndRoundTrip("extern/test-data/raw/CT1-512-512-1-16-0.raw", "openjpeg");
     
-    //readRawFileAndRoundTrip("extern/test-data/raw/jpeg400jfif-600-800-1-8-0.raw", "charls");
-    //readRawFileAndRoundTrip("extern/test-data/raw/jpeg400jfif-600-800-1-8-0.raw", "openjpeg");
-    //readRawFileAndRoundTrip("extern/test-data/raw/jpeg400jfif-600-800-1-8-0.raw", "libjpeg-turbo",2.0);
+    readRawFileAndRoundTrip("extern/test-data/raw/jpeg400jfif-600-800-1-8-0.raw", "charls");
+    readRawFileAndRoundTrip("extern/test-data/raw/jpeg400jfif-600-800-1-8-0.raw", "openjpeg");
+    readRawFileAndRoundTrip("extern/test-data/raw/jpeg400jfif-600-800-1-8-0.raw", "libjpeg-turbo",2.0);
     readRawFileAndRoundTrip("extern/test-data/raw/jpeg400jfif-600-800-1-8-0.raw", "ijg12", 2.0);
 
     //readFileAndRoundTrip("extern/test-data/jpeg2000/CT1.j2k", "openjpeg");

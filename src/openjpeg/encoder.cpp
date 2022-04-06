@@ -60,7 +60,6 @@ void openjpegencoder(const dicomcodecs::image& sourceImage, std::vector<uint8_t>
     /* initialize image components */
     for (int i = 0; i < sourceImage.componentCount; i++) {
         cmptparm[i].prec = (OPJ_UINT32)sourceImage.bitsPerSample;
-        cmptparm[i].bpp = (OPJ_UINT32)sourceImage.bitsPerSample;
         cmptparm[i].sgnd = (OPJ_UINT32)sourceImage.isSigned;
         cmptparm[i].dx = 1;//(OPJ_UINT32)(subsampling_dx * raw_cp->rawComps[i].dx);
         cmptparm[i].dy = 1;//(OPJ_UINT32)(subsampling_dy * raw_cp->rawComps[i].dy);

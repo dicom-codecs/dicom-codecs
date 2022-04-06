@@ -22,14 +22,16 @@ option(DICOM_CODECS_BUILD_LIBJPEGTURBO "Build libjpeg-turbo 8 bit" ON)
 option(DICOM_CODECS_BUILD_IJG12 "Build IJG 12 bit" ON)
 
 if(DICOM_CODECS_BUILD_OPENJPEG)
-  # NOTE - Add OpenJPEG first since its CMakeLists.txt messes variables up that impact other projects
-  option(OPJ_USE_THREAD "Build with thread/mutex support " OFF)
-  add_subdirectory(extern/openjpeg EXCLUDE_FROM_ALL)
-  # BEGIN - Correct the bugs in the OpenJPEG CMakeLists.txt file here..
-  set(EXECUTABLE_OUTPUT_PATH "")
-  set(LIBRARY_OUTPUT_PATH "")  
-  # END - Correct the bugs in the OpenJPEG CMakeLists.txt file here..
+  add_subdirectory(lib/openjpeg EXCLUDE_FROM_ALL)
+
+  #option(OPJ_USE_THREAD "Build with thread/mutex support " OFF)
+  #add_subdirectory(extern/openjpeg EXCLUDE_FROM_ALL)
+  #set(EXECUTABLE_OUTPUT_PATH "")
+  #set(LIBRARY_OUTPUT_PATH "")  
+
 endif(DICOM_CODECS_BUILD_OPENJPEG)
+
+
 
 if(DICOM_CODECS_BUILD_CHARLS)
   add_subdirectory(extern/charls EXCLUDE_FROM_ALL)

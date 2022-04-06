@@ -26,5 +26,7 @@ void roundTrip(const dicomcodecs::image& image, const std::string& codec, double
         if(averageDifference > maxAverageDiff) {
             throw("roundtrip did not produce original image");
         }
+    } else {
+        printf("RoundTrip success for %s\n", codec.c_str());
     }
 }
