@@ -144,7 +144,6 @@ private:
 };
 
 void rledecoder(const vector<uint8_t> &encodedBytes, image &targetImage) {
-
   RleDecoder decoder(encodedBytes.data(), encodedBytes.size());
 
   const size_t bytesPerPixel = (targetImage.bitsPerSample + 8 - 1) / 8;
@@ -166,10 +165,13 @@ void rledecoder(const vector<uint8_t> &encodedBytes, image &targetImage) {
     auto const sabyte = s % bytesAllocated;
 
     int32_t pos, offset;
-    pos = sample * bytesAllocated;
-    offset = targetImage.componentCount * bytesAllocated;
-
-    // TODO: Handle planar configuration.
+    if (targetImage.planarConfiguration == 0) {
+      pos = sample * bytesAllocated;
+      offset = targetImage.componentCount * bytesAllocated;
+    } else {
+      pos = sample * bytesAllocated * pixelCount;
+      offset = bytesAllocated;
+    }
 
     pos += bytesAllocated - sabyte - 1;
     decoder.DecodeSegment(s, pDest, decodedBufferSize, pos, offset);

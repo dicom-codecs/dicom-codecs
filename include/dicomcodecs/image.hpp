@@ -29,6 +29,12 @@ struct image {
   uint8_t componentCount;
 
   /// <summary>
+  /// Indicates whether the color pixel data are encoded 
+  /// color-by-plane [0] or color-by-pixel [1].
+  /// </summary>
+  uint8_t planarConfiguration;
+
+  /// <summary>
   /// true if signed, false if unsigned
   /// </summary>
   bool isSigned;
