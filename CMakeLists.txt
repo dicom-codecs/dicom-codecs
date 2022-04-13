@@ -16,13 +16,13 @@ set(BUILD_SHARED_LIBS OFF)
 set(BUILD_STATIC_LIBS ON)
 
 # options to control whether or not we build specific libraries.  This allows users to easily add just the codecs they want
-option(DICOM_CODECS_BUILD_OPENJPEG "Build OpenJPEG" ON)
-option(DICOM_CODECS_BUILD_CHARLS "Build CharLS" ON)
+option(DICOM_CODECS_BUILD_OPENJPEG "Build OpenJPEG" OFF)
+option(DICOM_CODECS_BUILD_CHARLS "Build CharLS" OFF)
 option(DICOM_CODECS_BUILD_LIBJPEGTURBO "Build libjpeg-turbo 8 bit" ON)
-option(DICOM_CODECS_BUILD_IJG12 "Build IJG 12 bit" ON)
-option(DICOM_CODECS_BUILD_RLE "Build RLE" ON)
-option(DICOM_CODECS_BUILD_LJPEG6B "Build ljpeg-6b Codec" ON)
-option(DICOM_CODECS_GDCM_JPEG16 "Build GDCM JPEG16 Codec" ON)
+option(DICOM_CODECS_BUILD_IJG12 "Build IJG 12 bit" OFF)
+option(DICOM_CODECS_BUILD_RLE "Build RLE" OFF)
+option(DICOM_CODECS_BUILD_LJPEG6B "Build ljpeg-6b Codec" OFF)
+option(DICOM_CODECS_GDCM_JPEG16 "Build GDCM JPEG16 Codec" OFF)
 
 if(DICOM_CODECS_BUILD_OPENJPEG)
   add_subdirectory(lib/openjpeg EXCLUDE_FROM_ALL)
@@ -44,6 +44,7 @@ endif(DICOM_CODECS_BUILD_IJG12)
 
 if(DICOM_CODECS_BUILD_LIBJPEGTURBO)
   add_subdirectory(extern/libjpeg-turbo EXCLUDE_FROM_ALL)
+  add_subdirectory(lib/libjpeg-turbo8 EXCLUDE_FROM_ALL)
 endif(DICOM_CODECS_BUILD_LIBJPEGTURBO)
 
 if(DICOM_CODECS_BUILD_LIBJPEG)

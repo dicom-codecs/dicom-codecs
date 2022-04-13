@@ -8,14 +8,6 @@ if(DICOM_CODECS_BUILD_CHARLS)
 set(CHARLS_SOURCES "charls/decoder.cpp"  "charls/encoder.cpp")
 endif(DICOM_CODECS_BUILD_CHARLS)
 
-if(DICOM_CODECS_BUILD_LIBJPEGTURBO)
-set(LIBJPEGTURBO_SOURCES "libjpeg-turbo/decoder.cpp" "libjpeg-turbo/encoder.cpp")
-endif(DICOM_CODECS_BUILD_LIBJPEGTURBO)
-
-if(DICOM_CODECS_BUILD_IJG12)
-#set(IJG12_SOURCES "ijg12/encoder.cpp" "ijg12/decoder.cpp")
-endif(DICOM_CODECS_BUILD_IJG12)
-
 if(DICOM_CODECS_BUILD_RLE)
 set(RLE_SOURCES "rle/decoder.cpp"  "rle/encoder.cpp")
 endif(DICOM_CODECS_BUILD_RLE)
@@ -26,8 +18,6 @@ add_library(dicomcodecs
     ${OPENJPEG_SOURCES} 
     ${CHARLS_SOURCES} 
     ${LIBJPEGTURBO_SOURCES} 
-    ${IJG12_SOURCES}
-    ${GDCM_SOURCES}
     ${RLE_SOURCES} 
 )
 
@@ -49,7 +39,7 @@ target_compile_options(dicomcodecs PUBLIC -DDICOM_CODECS_BUILD_CHARLS)
 endif(DICOM_CODECS_BUILD_CHARLS)
 
 if(DICOM_CODECS_BUILD_LIBJPEGTURBO)
-target_link_libraries(dicomcodecs PRIVATE turbojpeg-static)
+target_link_libraries(dicomcodecs PRIVATE libjpeg-turbo8)
 target_compile_options(dicomcodecs PUBLIC -DDICOM_CODECS_BUILD_LIBJPEGTURBO)
 endif(DICOM_CODECS_BUILD_LIBJPEGTURBO)
 

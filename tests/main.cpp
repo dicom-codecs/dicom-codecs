@@ -99,20 +99,22 @@ void decodeTests()
 void bechmark8bit() {
     printf("** Running 8 bit Benchmark Tests **\n");
     image image;
-    //readFileAndDecode("extern/test-data/jpeglossy8bit/jpeg400jfif.jpg", "libjpeg-turbo", image);
+    readFileAndDecode("extern/test-data/jpeglossy8bit/jpeg400jfif.jpg", "libjpeg-turbo", image);
     //readFileAndDecode("extern/test-data/jpeglossless/CT1.JLL", "ljpeg6b", image);
-    readFileAndDecode("extern/test-data/jpegls/CT1.JLS", "charls", image);
+    //readFileAndDecode("extern/test-data/jpegls/CT1.JLS", "charls", image);
 
     printImage(image);
     size_t iterations = 5;
 
-    benchmark(image, "", "charls", iterations);
+    benchmark(image, "", "libjpeg-turbo", iterations);
+
+/*    benchmark(image, "", "charls", iterations);
     benchmark(image, "", "openjpeg", iterations);
-    //benchmark(image, "", "libjpeg-turbo", iterations);
     benchmark(image, "", "ijg12", iterations);
     benchmark(image, "", "ljpeg6b", iterations);
     benchmark(image, "", "rle", iterations);
     benchmark(image, "", "gdcm-jpeg16", iterations);
+*/
 }
 
 int main(int argc, char **argv)

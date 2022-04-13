@@ -1,8 +1,7 @@
 #include "../../extern/libjpeg-turbo/turbojpeg.h"
+#include "../../include/dicomcodecs/exception.hpp"
+#include "../../include/dicomcodecs/image.hpp"
 #include <stdio.h>
-
-#include <dicomcodecs/exception.hpp>
-#include <dicomcodecs/image.hpp>
 
 using namespace dicomcodecs;
 using namespace std;
