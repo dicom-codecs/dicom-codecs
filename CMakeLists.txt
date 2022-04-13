@@ -23,6 +23,7 @@ option(DICOM_CODECS_BUILD_IJG12 "Build IJG 12 bit" ON)
 option(DICOM_CODECS_BUILD_RLE "Build RLE" ON)
 option(DICOM_CODECS_BUILD_LJPEG6B16 "Build ljpeg-6b 16 bit Codec" ON)
 option(DICOM_CODECS_GDCM_JPEG16 "Build GDCM JPEG16 Codec" ON)
+option(DICOM_CODECS_OPENJPH "Build OpenJPH Codec" ON)
 
 if(DICOM_CODECS_BUILD_OPENJPEG)
   add_subdirectory(lib/openjpeg EXCLUDE_FROM_ALL)
@@ -58,6 +59,14 @@ endif()
 if(DICOM_CODECS_GDCM_JPEG16)
   add_subdirectory(lib/gdcm16 EXCLUDE_FROM_ALL)
 endif()
+
+if(DICOM_CODECS_OPENJPH)
+add_subdirectory(extern/OpenJPH EXCLUDE_FROM_ALL)
+add_subdirectory(lib/openjph EXCLUDE_FROM_ALL)
+endif()
+
+
+
 
 # The compiled library code is here
 add_subdirectory(src)

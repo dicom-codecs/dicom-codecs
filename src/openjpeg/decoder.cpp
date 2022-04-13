@@ -27,7 +27,7 @@ static void info_callback(const char *msg, void *client_data) {
   printf("[INFO] %s", msg);
 }
 
-dicomcodecs::size calculateSizeAtDecompositionLevel(const image &imageFrame,
+static dicomcodecs::size calculateSizeAtDecompositionLevel(const image &imageFrame,
                                        int decompositionLevel) {
   dicomcodecs::size result(imageFrame.width, imageFrame.height);
   while (decompositionLevel--) {

@@ -19,3 +19,6 @@
 [submodule "extern/GDCM"]
 	path = extern/GDCM
 	url = https://github.com/malaterre/GDCM.git
+[submodule "extern/OpenJPH"]
+	path = extern/OpenJPH
+	url = https://github.com/aous72/OpenJPH.git

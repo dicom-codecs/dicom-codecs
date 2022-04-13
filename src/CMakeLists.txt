@@ -58,6 +58,10 @@ target_link_libraries(dicomcodecs PRIVATE gdcm16)
 target_compile_options(dicomcodecs PUBLIC -DDICOM_CODECS_GDCM_JPEG16)
 endif(DICOM_CODECS_GDCM_JPEG16)
 
+if(DICOM_CODECS_OPENJPH)
+target_link_libraries(dicomcodecs PRIVATE libopenjph)
+target_compile_options(dicomcodecs PUBLIC -DDICOM_CODECS_OPENJPH)
+endif(DICOM_CODECS_OPENJPH)
 
 # All users of this library will need at least C++11
 target_compile_features(dicomcodecs PUBLIC cxx_std_11)

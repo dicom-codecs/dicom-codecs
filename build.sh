@@ -3,9 +3,9 @@
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-#rm -rf build
+rm -rf build
 mkdir -p build
-#(cd build-native && CC=clang CXX=clang++ cmake -DCMAKE_BUILD_TYPE=Debug ..)
+#(cd build && cmake -DCMAKE_BUILD_TYPE=Debug ..)
 (cd build && cmake ..)
 retVal=$?
 if [ $retVal -ne 0 ]; then

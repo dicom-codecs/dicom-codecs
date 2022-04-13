@@ -34,6 +34,9 @@ void ljpeg6b16_encode(const image &sourceImage, vector<uint8_t> &encodedBytes);
 void gdcmjpeg16decoder(const vector<uint8_t> &encodedBytes, image &targetImage);
 void gdcmjpeg16encoder(const image &sourceImage, vector<uint8_t> &encodedBytes);
 
+void openjph_decoder(const vector<uint8_t> &encodedBytes, image &targetImage);
+void openjph_encoder(const image &sourceImage, vector<uint8_t> &encodedBytes);
+
 map<string, decoder_ptr> decoders;
 map<string, encoder_ptr> encoders;
 
@@ -82,6 +85,10 @@ void init()
   registerEncoder("gdcm-jpeg16", gdcmjpeg16encoder);
 #endif
 
+#ifdef DICOM_CODECS_OPENJPH
+  registerDecoder("openjph", openjph_decoder);
+  registerEncoder("openjph", openjph_encoder);
+#endif
 }
 
 

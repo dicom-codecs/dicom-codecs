@@ -116,6 +116,8 @@ void testAllCodecs() {
         roundTrip(image, "gdcm-jpeg16", 2.0);
         roundTrip(image, "charls");
         roundTrip(image, "openjpeg");
+        roundTrip(image, "openjph");
+
         //roundTrip(image, "rle");
 
         size_t iterations = 5;
@@ -125,6 +127,8 @@ void testAllCodecs() {
         benchmarkDecode(image, "", "gdcm-jpeg16", iterations);
         benchmarkDecode(image, "", "charls", iterations);
         benchmarkDecode(image, "", "openjpeg", iterations);
+        benchmarkDecode(image, "", "openjph", iterations);
+
         //benchmarkDecode(image, "", "rle", iterations);
 
         benchmarkEncode(image, "", "libjpeg-turbo8", iterations);
@@ -133,6 +137,7 @@ void testAllCodecs() {
         benchmarkEncode(image, "", "gdcm-jpeg16", iterations);
         benchmarkEncode(image, "", "charls", iterations);
         benchmarkEncode(image, "", "openjpeg", iterations);
+        benchmarkEncode(image, "", "openjph", iterations);
         //benchmarkEncode(image, "", "rle", iterations);
     }
     catch(dicom_codec_exception& ex) {
@@ -147,10 +152,22 @@ int main(int argc, char **argv)
 {
     init();
 
+    testAllCodecs();
+
+/*
+    image image;
+    readFileAndDecode("../../chafey/openjphjs/test/fixtures/j2c/CT1.j2c","openjph", image);
+    printImage(image);
+    roundTrip(image, "openjph");
+
+    std::vector<unsigned char> encodedBytes;
+    encode(image, encodedBytes, "openjph");
+    printf("encoded bytes.size() = %ld\n", encodedBytes.size());
+    */
     // makeRawImages();
     // roundTripTests();
     // benchmarkTests();
-    testAllCodecs();
+    //testAllCodecs();
     //decodeTests();
     // readFileAndDecode("../../chafey/openjphjs/test/fixtures/j2c/CT1.j2c",
     // "openjpeg", image); // HTJ2K
