@@ -166,6 +166,5 @@
 #define jpeg_compress_struct GDCMJPEG16_compress_struct
 #define jpeg_destination_mgr GDCMJPEG16_destination_mgr
 #define jpeg_source_mgr GDCMJPEG16_source_mgr
-#define jpeg_std_message_table GDCMJPEG16_MsgTable
-
+#define jpeg_mem_dest GDCMJPEG16_mem_dest
 #endif /* __jpegcmake_h */

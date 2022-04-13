@@ -29,10 +29,10 @@ void rledecoder(const vector<uint8_t> &encodedBytes, image &targetImage);
 void rleencoder(const image &sourceImage, vector<uint8_t> &encodedBytes);
 
 void ljpeg6b_decode(const vector<uint8_t> &encodedBytes, image &targetImage);
-void ljpeg6b_decode(const vector<uint8_t> &encodedBytes, image &targetImage);
+void ljpeg6b_encode(const image &sourceImage, vector<uint8_t> &encodedBytes);
 
 void gdcmjpeg16decoder(const vector<uint8_t> &encodedBytes, image &targetImage);
-void gdcmjpeg16encoder(const vector<uint8_t> &encodedBytes, image &targetImage);
+void gdcmjpeg16encoder(const image &sourceImage, vector<uint8_t> &encodedBytes);
 
 map<string, decoder_ptr> decoders;
 map<string, encoder_ptr> encoders;
@@ -71,7 +71,7 @@ void init()
 #endif
 #ifdef DICOM_CODECS_BUILD_LJPEG6B
   registerDecoder("ljpeg6b", ljpeg6b_decode);
-  //registerEncoder("ljpeg6b", ljpeg6b_encode);
+  registerEncoder("ljpeg6b", ljpeg6b_encode);
 #endif
 #ifdef DICOM_CODECS_BUILD_RLE
   registerDecoder("rle", rledecoder);
@@ -79,7 +79,7 @@ void init()
 #endif
 #ifdef DICOM_CODECS_GDCM_JPEG16
   registerDecoder("gdcm-jpeg16", gdcmjpeg16decoder);
-  //registerEncoder("gdcm-jpeg16", gdcmjpeg16encoder);
+  registerEncoder("gdcm-jpeg16", gdcmjpeg16encoder);
 #endif
 
 }

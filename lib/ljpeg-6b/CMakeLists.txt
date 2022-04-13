@@ -88,6 +88,8 @@ set(LJPEG6b_SYSDEPSOURCES
 set(LJPEG6b_CODEC
     jmemsrc.c
     decoder.cpp
+    encoder.cpp
+    jdatadst.c
 )
 
 set(LJPEG6b_INCLUDES

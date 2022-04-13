@@ -101,6 +101,7 @@ add_library(gdcm16
     ${GDCM_SRCS} 
     encoder.cpp
     decoder.cpp
+    jdatadst.c
 )
 
 target_compile_options(gdcm16 PUBLIC "SHELL:-iquote ${CMAKE_CURRENT_SOURCE_DIR}")

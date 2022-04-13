@@ -96,6 +96,24 @@ void decodeTests()
     */
 }
 
+void bechmark8bit() {
+    printf("** Running 8 bit Benchmark Tests **\n");
+    image image;
+    //readFileAndDecode("extern/test-data/jpeglossy8bit/jpeg400jfif.jpg", "libjpeg-turbo", image);
+    readFileAndDecode("extern/test-data/jpeglossless/CT1.JLL", "ljpeg6b", image);
+
+    printImage(image);
+    size_t iterations = 50;
+
+    benchmark(image, "", "charls", iterations);
+    benchmark(image, "", "openjpeg", iterations);
+    benchmark(image, "", "libjpeg-turbo", iterations);
+    benchmark(image, "", "ijg12", iterations);
+    benchmark(image, "", "ljpeg6b", iterations);
+    //benchmark(image, "", "rle", iterations);
+    benchmark(image, "", "gdcm-jpeg16", iterations);
+}
+
 int main(int argc, char **argv)
 {
     init();
@@ -103,7 +121,8 @@ int main(int argc, char **argv)
     // makeRawImages();
     // roundTripTests();
     // benchmarkTests();
-    decodeTests();
+    bechmark8bit();
+    //decodeTests();
     // readFileAndDecode("../../chafey/openjphjs/test/fixtures/j2c/CT1.j2c",
     // "openjpeg", image); // HTJ2K
 
