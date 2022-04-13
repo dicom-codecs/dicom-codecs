@@ -13,3 +13,9 @@
 [submodule "extern/test-data"]
 	path = extern/test-data
 	url = https://github.com/dicom-codecs/test-data.git
+[submodule "extern/ljpeg-6b"]
+	path = extern/ljpeg-6b
+	url = https://github.com/dicom-codecs/ljpeg-6b.git
+[submodule "extern/GDCM"]
+	path = extern/GDCM
+	url = https://github.com/malaterre/GDCM.git

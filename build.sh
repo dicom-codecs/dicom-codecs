@@ -12,13 +12,9 @@ if [ $retVal -ne 0 ]; then
     echo "${RED}CMAKE FAILED${NC}"
     exit 1
 fi
-NPROC=$(sysctl -n hw.ncpu)
-if [ -z $NPROC ]; then
-    NPROC=$(nproc)
-fi
 
 #(cd build && make -j $NPROC)
-(cd build && make VERBOSE=1 -j $NPROC)
+(cd build && make VERBOSE=1 -j)
 retVal=$?
 if [ $retVal -ne 0 ]; then
     echo "${RED}MAKE FAILED${NC}"

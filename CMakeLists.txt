@@ -21,6 +21,8 @@ option(DICOM_CODECS_BUILD_CHARLS "Build CharLS" ON)
 option(DICOM_CODECS_BUILD_LIBJPEGTURBO "Build libjpeg-turbo 8 bit" ON)
 option(DICOM_CODECS_BUILD_IJG12 "Build IJG 12 bit" ON)
 option(DICOM_CODECS_BUILD_RLE "Build RLE" ON)
+option(DICOM_CODECS_BUILD_LJPEG6B "Build ljpeg-6b Codec" ON)
+option(DICOM_CODECS_GDCM_JPEG16 "Build GDCM JPEG16 Codec" ON)
 
 if(DICOM_CODECS_BUILD_OPENJPEG)
   add_subdirectory(lib/openjpeg EXCLUDE_FROM_ALL)
@@ -31,8 +33,6 @@ if(DICOM_CODECS_BUILD_OPENJPEG)
   #set(LIBRARY_OUTPUT_PATH "")  
 
 endif(DICOM_CODECS_BUILD_OPENJPEG)
-
-
 
 if(DICOM_CODECS_BUILD_CHARLS)
   add_subdirectory(extern/charls EXCLUDE_FROM_ALL)
@@ -45,6 +45,18 @@ endif(DICOM_CODECS_BUILD_IJG12)
 if(DICOM_CODECS_BUILD_LIBJPEGTURBO)
   add_subdirectory(extern/libjpeg-turbo EXCLUDE_FROM_ALL)
 endif(DICOM_CODECS_BUILD_LIBJPEGTURBO)
+
+if(DICOM_CODECS_BUILD_LIBJPEG)
+  add_subdirectory(lib/libjpeg EXCLUDE_FROM_ALL)
+endif(DICOM_CODECS_BUILD_LIBJPEG)
+
+if(DICOM_CODECS_BUILD_LJPEG6B)
+  add_subdirectory(lib/ljpeg-6b EXCLUDE_FROM_ALL)
+endif()
+
+if(DICOM_CODECS_GDCM_JPEG16)
+  add_subdirectory(lib/gdcm16 EXCLUDE_FROM_ALL)
+endif()
 
 # The compiled library code is here
 add_subdirectory(src)

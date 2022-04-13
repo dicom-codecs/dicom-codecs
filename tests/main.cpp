@@ -20,73 +20,92 @@ void makeRawImages();
 void readRawFileAndRoundTrip(const string &fileName, const string &codec,
                              double maxAverageDiff = 0.0);
 
-void roundTripTests() {
-  // readRawFileAndRoundTrip("extern/test-data/raw/CT1-512-512-1-16-0.raw",
-  // "charls");
-  // readRawFileAndRoundTrip("extern/test-data/raw/CT1-512-512-1-16-0.raw",
-  // "openjpeg");
+void roundTripTests()
+{
+    // readRawFileAndRoundTrip("extern/test-data/raw/CT1-512-512-1-16-0.raw",
+    // "charls");
+    // readRawFileAndRoundTrip("extern/test-data/raw/CT1-512-512-1-16-0.raw",
+    //                       "openjpeg");
 
-  // readRawFileAndRoundTrip("extern/test-data/raw/jpeg400jfif-600-800-1-8-0.raw",
-  // "charls");
-  // readRawFileAndRoundTrip("extern/test-data/raw/jpeg400jfif-600-800-1-8-0.raw",
-  // "openjpeg");
-  // readRawFileAndRoundTrip("extern/test-data/raw/jpeg400jfif-600-800-1-8-0.raw",
-  // "libjpeg-turbo",2.0);
-  readRawFileAndRoundTrip("extern/test-data/raw/jpeg400jfif-600-800-1-8-0.raw",
-                          "ijg12", 2.0);
+    // readRawFileAndRoundTrip("extern/test-data/raw/jpeg400jfif-600-800-1-8-0.raw",
+    // "charls");
+    // readRawFileAndRoundTrip("extern/test-data/raw/jpeg400jfif-600-800-1-8-0.raw",
+    // "openjpeg");
+    // readRawFileAndRoundTrip("extern/test-data/raw/jpeg400jfif-600-800-1-8-0.raw",
+    // "libjpeg-turbo",2.0);
+    // readRawFileAndRoundTrip("extern/test-data/raw/jpeg400jfif-600-800-1-8-0.raw",
+    //                        "ijg12", 2.0);
+    readRawFileAndRoundTrip("extern/test-data/raw/jpeg400jfif-600-800-1-8-0.raw",
+                            "libjpeg", 2.0);
 
-  // readFileAndRoundTrip("extern/test-data/jpeg2000/CT1.j2k", "openjpeg");
-  // readFileAndRoundTrip("extern/test-data/jpeglossy8bit/jpeg400jfif.jpg",
-  // "libjpeg-turbo", 2.0);
-  // readFileAndRoundTrip("extern/test-data/jpeglossy12bit/test12.jpg",
-  // "ijg12", 2.0);
+    // readFileAndRoundTrip("extern/test-data/jpeg2000/CT1.j2k", "openjpeg");
+    // readFileAndRoundTrip("extern/test-data/jpeglossy8bit/jpeg400jfif.jpg",
+    // "libjpeg-turbo", 2.0);
+    // readFileAndRoundTrip("extern/test-data/jpeglossy12bit/test12.jpg",
+    // "ijg12", 2.0);
 }
 
 void benchmarkRawFilePath(const string &filePath, const string &codec,
-                          size_t iterations) {
-  image image;
-  string fileName = readRawFile(filePath, image);
-  benchmark(image, fileName, codec, iterations);
+                          size_t iterations)
+{
+    image image;
+    string fileName = readRawFile(filePath, image);
+    benchmark(image, fileName, codec, iterations);
 }
 
-void benchmarkTests() {
-  printf("** Running Benchmark Tests **\n");
-  image image;
-  string codec("charls");
-  size_t iterations = 1;
-  benchmarkRawFilePath("extern/test-data/raw/CT1-512-512-1-16-0.raw", codec,
-                       iterations);
-  benchmarkRawFilePath("extern/test-data/raw/CT2-512-512-1-16-0.raw", codec,
-                       iterations);
-  benchmarkRawFilePath("extern/test-data/raw/MG1-3064-4664-1-12-0.raw", codec,
-                       iterations);
-  benchmarkRawFilePath("extern/test-data/raw/MR2-1024-1024-1-12-0.raw", codec,
-                       iterations);
-  benchmarkRawFilePath("extern/test-data/raw/MR3-512-512-1-16-0.raw", codec,
-                       iterations);
-  benchmarkRawFilePath("extern/test-data/raw/MR4-512-512-1-12-0.raw", codec,
-                       iterations);
-  benchmarkRawFilePath("extern/test-data/raw/NM1-256-1024-1-16-0.raw", codec,
-                       iterations);
-  benchmarkRawFilePath("extern/test-data/raw/RG1-1841-1955-1-15-0.raw", codec,
-                       iterations);
-  benchmarkRawFilePath("extern/test-data/raw/RG2-1760-2140-1-10-0.raw", codec,
-                       iterations);
-  benchmarkRawFilePath("extern/test-data/raw/RG3-1760-1760-1-10-0.raw", codec,
-                       iterations);
-  benchmarkRawFilePath("extern/test-data/raw/SC1-2048-2487-1-12-0.raw", codec,
-                       iterations);
+void benchmarkTests()
+{
+    printf("** Running Benchmark Tests **\n");
+    image image;
+    string codec("charls");
+    size_t iterations = 1;
+    benchmarkRawFilePath("extern/test-data/raw/CT1-512-512-1-16-0.raw", codec,
+                         iterations);
+    benchmarkRawFilePath("extern/test-data/raw/CT2-512-512-1-16-0.raw", codec,
+                         iterations);
+    benchmarkRawFilePath("extern/test-data/raw/MG1-3064-4664-1-12-0.raw", codec,
+                         iterations);
+    benchmarkRawFilePath("extern/test-data/raw/MR2-1024-1024-1-12-0.raw", codec,
+                         iterations);
+    benchmarkRawFilePath("extern/test-data/raw/MR3-512-512-1-16-0.raw", codec,
+                         iterations);
+    benchmarkRawFilePath("extern/test-data/raw/MR4-512-512-1-12-0.raw", codec,
+                         iterations);
+    benchmarkRawFilePath("extern/test-data/raw/NM1-256-1024-1-16-0.raw", codec,
+                         iterations);
+    benchmarkRawFilePath("extern/test-data/raw/RG1-1841-1955-1-15-0.raw", codec,
+                         iterations);
+    benchmarkRawFilePath("extern/test-data/raw/RG2-1760-2140-1-10-0.raw", codec,
+                         iterations);
+    benchmarkRawFilePath("extern/test-data/raw/RG3-1760-1760-1-10-0.raw", codec,
+                         iterations);
+    benchmarkRawFilePath("extern/test-data/raw/SC1-2048-2487-1-12-0.raw", codec,
+                         iterations);
 }
 
-int main(int argc, char **argv) {
-  init();
+void decodeTests()
+{
+    image image;
+    readFileAndDecode("extern/test-data/jpeglossless/CT1.JLL", "ljpeg6b", image);
+    printImage(image);
+    readFileAndDecode("extern/test-data/jpeglossless/CT1.JLL", "gdcm-jpeg16", image);
+    printImage(image);
+    /*    std::vector<unsigned char> encodedBytes;
+        encode(image, encodedBytes, "charls");
+        writeFile("foo.jls", encodedBytes);
+    */
+}
 
-  // makeRawImages();
-  // roundTripTests();
-  benchmarkTests();
+int main(int argc, char **argv)
+{
+    init();
 
-  // readFileAndDecode("../../chafey/openjphjs/test/fixtures/j2c/CT1.j2c",
-  // "openjpeg", image); // HTJ2K
+    // makeRawImages();
+    // roundTripTests();
+    // benchmarkTests();
+    decodeTests();
+    // readFileAndDecode("../../chafey/openjphjs/test/fixtures/j2c/CT1.j2c",
+    // "openjpeg", image); // HTJ2K
 
-  return 0;
+    return 0;
 }

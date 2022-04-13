@@ -79,6 +79,16 @@
         "list": "cpp",
         "map": "cpp",
         "strstream": "cpp",
-        "format": "cpp"
+        "format": "cpp",
+        "*.tcc": "cpp",
+        "set": "cpp",
+        "memory_resource": "cpp",
+        "numbers": "cpp",
+        "semaphore": "cpp",
+        "stop_token": "cpp",
+        "thread": "cpp",
+        "jconfig.h": "c",
+        "jmorecfg.h": "c",
+        "jpeglib.h": "c"
     }
 }

@@ -63,3 +63,5 @@ add_library(openjp2
 
 target_compile_options(openjp2 PUBLIC "SHELL:-iquote ${CMAKE_CURRENT_SOURCE_DIR}")
 target_compile_options(openjp2 PRIVATE ${OPENJP2_COMPILE_OPTIONS})
+target_include_directories(openjp2 PUBLIC "${PROJECT_SOURCE_DIR}/extern/openjpeg/src/lib/openjp2" )
+
