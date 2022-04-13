@@ -1,6 +1,6 @@
-#include <dicomcodecs/exception.hpp>
-#include <dicomcodecs/image.hpp>
-#include <jpeglib.h>
+#include "../../include/dicomcodecs/exception.hpp"
+#include "../../include/dicomcodecs/image.hpp"
+#include "jpeglib.h"
 #include <setjmp.h>
 #include <stddef.h>
 #include <stdio.h>

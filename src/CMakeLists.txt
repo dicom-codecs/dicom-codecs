@@ -13,7 +13,7 @@ set(LIBJPEGTURBO_SOURCES "libjpeg-turbo/decoder.cpp" "libjpeg-turbo/encoder.cpp"
 endif(DICOM_CODECS_BUILD_LIBJPEGTURBO)
 
 if(DICOM_CODECS_BUILD_IJG12)
-set(IJG12_SOURCES "ijg12/encoder.cpp" "ijg12/decoder.cpp")
+#set(IJG12_SOURCES "ijg12/encoder.cpp" "ijg12/decoder.cpp")
 endif(DICOM_CODECS_BUILD_IJG12)
 
 if(DICOM_CODECS_BUILD_RLE)
