@@ -96,6 +96,9 @@ void gdcmjpeg16encoder(const image &sourceImage, vector<uint8_t> &encodedBytes) 
    * Here we just illustrate the use of quality (quantization table) scaling:
    */
   jpeg_set_quality(&cinfo, quality, TRUE /* limit to baseline-JPEG values */);
+  // predictor = 5 (hard coded for now but can be 1-7)
+  // point_transform = 0 (NOTE: must be 0 to be lossless!)
+  jpeg_simple_lossless(&cinfo, 5, 0);
 
   /* Step 4: Start compressor */
 

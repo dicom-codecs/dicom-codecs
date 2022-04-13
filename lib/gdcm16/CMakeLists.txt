@@ -1,5 +1,5 @@
 
-#set(GDCM_COMPILE_OPTIONS ${GDCM_COMPILE_OPTIONS} "$<$<CONFIG:Release>:-ffast-math>")
+set(GDCM_COMPILE_OPTIONS ${GDCM_COMPILE_OPTIONS} "$<$<CONFIG:Release>:-ffast-math>")
 
 set(GDCM_SOURCE_DIR "${PROJECT_SOURCE_DIR}/extern/GDCM/Utilities/gdcmjpeg")
 
@@ -107,5 +107,3 @@ add_library(gdcm16
 target_compile_options(gdcm16 PUBLIC "SHELL:-iquote ${CMAKE_CURRENT_SOURCE_DIR}")
 target_compile_options(gdcm16 PRIVATE ${GDCM_COMPILE_OPTIONS})
 target_include_directories(gdcm16 PUBLIC "${GDCM_SOURCE_DIR}")
-#set_target_properties(gdcm16 PROPERTIES LINKER_LANGUAGE CXX)
-#set_source_files_properties(GDCM_SRCS PROPERTIES LANGUAGE CXX )

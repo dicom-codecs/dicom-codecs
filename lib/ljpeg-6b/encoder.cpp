@@ -73,7 +73,7 @@ void ljpeg6b_encode(const image &sourceImage, vector<uint8_t> &encodedBytes) {
   jpeg_mem_dest(&cinfo, &pData, &outsize);
 
   /* Step 3: set parameters for compression */
-
+  
   /* First we supply a description of the input image.
    * Four fields of the cinfo struct must be filled in:
    */
@@ -91,10 +91,14 @@ void ljpeg6b_encode(const image &sourceImage, vector<uint8_t> &encodedBytes) {
    * since the defaults depend on the source color space.)
    */
   jpeg_set_defaults(&cinfo);
+
   /* Now you can set any non-default parameters you wish to.
    * Here we just illustrate the use of quality (quantization table) scaling:
    */
   jpeg_set_quality(&cinfo, quality, TRUE /* limit to baseline-JPEG values */);
+  // predictor = 5 (hard coded for now but can be 1-7)
+  // point_transform = 0 (NOTE: must be 0 to be lossless!)
+  jpeg_simple_lossless(&cinfo, 5, 0);
 
   /* Step 4: Start compressor */
 
