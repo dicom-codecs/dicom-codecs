@@ -6,7 +6,7 @@
 using namespace dicomcodecs;
 using namespace std;
 
-void libjpegturboencoder(const image &sourceImage,
+void libjpegturbo8encoder(const image &sourceImage,
                          vector<uint8_t> &encodedBytes) {
   // HACK: presize the encoded buffer to the decoded size to make sure we have
   // enough space for the resulting image

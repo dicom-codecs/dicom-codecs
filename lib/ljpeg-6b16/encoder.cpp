@@ -17,7 +17,7 @@ jpeg_mem_dest (j_compress_ptr cinfo,
 }
 
 
-void ljpeg6b_encode(const image &sourceImage, vector<uint8_t> &encodedBytes) {
+void ljpeg6b16_encode(const image &sourceImage, vector<uint8_t> &encodedBytes) {
   int quality = 100;
 
   /* This struct contains the JPEG compression parameters and pointers to

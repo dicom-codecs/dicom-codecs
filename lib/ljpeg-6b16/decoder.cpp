@@ -37,7 +37,7 @@ my_error_exit(j_common_ptr cinfo) {
   longjmp(myerr->setjmp_buffer, 1);
 }
 
-void ljpeg6b_decode(const vector<uint8_t> &encodedBytes, image &targetImage) {
+void ljpeg6b16_decode(const vector<uint8_t> &encodedBytes, image &targetImage) {
 
   /* This struct contains the JPEG decompression parameters and pointers to
    * working space (which is allocated as needed by the JPEG library).

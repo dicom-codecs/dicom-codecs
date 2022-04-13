@@ -14,9 +14,9 @@ void charlsencoder(const image &sourceImage, vector<uint8_t> &encodedBytes);
 void openjpegdecoder(const vector<uint8_t> &encodedBytes, image &targetImage);
 void openjpegencoder(const image &sourceImage, vector<uint8_t> &encodedBytes);
 
-void libjpegturbodecoder(const vector<uint8_t> &encodedBytes,
+void libjpegturbo8decoder(const vector<uint8_t> &encodedBytes,
                          image &targetImage);
-void libjpegturboencoder(const image &sourceImage,
+void libjpegturbo8encoder(const image &sourceImage,
                          vector<uint8_t> &encodedBytes);
 
 void ijg12_decode(const vector<uint8_t> &encodedBytes, image &targetImage);
@@ -28,8 +28,8 @@ void gdcm_encode(const image &sourceImage, vector<uint8_t> &encodedBytes);
 void rledecoder(const vector<uint8_t> &encodedBytes, image &targetImage);
 void rleencoder(const image &sourceImage, vector<uint8_t> &encodedBytes);
 
-void ljpeg6b_decode(const vector<uint8_t> &encodedBytes, image &targetImage);
-void ljpeg6b_encode(const image &sourceImage, vector<uint8_t> &encodedBytes);
+void ljpeg6b16_decode(const vector<uint8_t> &encodedBytes, image &targetImage);
+void ljpeg6b16_encode(const image &sourceImage, vector<uint8_t> &encodedBytes);
 
 void gdcmjpeg16decoder(const vector<uint8_t> &encodedBytes, image &targetImage);
 void gdcmjpeg16encoder(const image &sourceImage, vector<uint8_t> &encodedBytes);
@@ -61,17 +61,17 @@ void init()
   registerDecoder("openjpeg", openjpegdecoder);
   registerEncoder("openjpeg", openjpegencoder);
 #endif
-#ifdef DICOM_CODECS_BUILD_LIBJPEGTURBO
-  registerDecoder("libjpeg-turbo", libjpegturbodecoder);
-  registerEncoder("libjpeg-turbo", libjpegturboencoder);
+#ifdef DICOM_CODECS_BUILD_LIBJPEGTURBO8
+  registerDecoder("libjpeg-turbo8", libjpegturbo8decoder);
+  registerEncoder("libjpeg-turbo8", libjpegturbo8encoder);
 #endif
 #ifdef DICOM_CODECS_BUILD_IJG12
   registerDecoder("ijg12", ijg12_decode);
   registerEncoder("ijg12", ijg12_encode);
 #endif
-#ifdef DICOM_CODECS_BUILD_LJPEG6B
-  registerDecoder("ljpeg6b", ljpeg6b_decode);
-  registerEncoder("ljpeg6b", ljpeg6b_encode);
+#ifdef DICOM_CODECS_BUILD_LJPEG6B16
+  registerDecoder("ljpeg6b16", ljpeg6b16_decode);
+  registerEncoder("ljpeg6b16", ljpeg6b16_encode);
 #endif
 #ifdef DICOM_CODECS_BUILD_RLE
   registerDecoder("rle", rledecoder);

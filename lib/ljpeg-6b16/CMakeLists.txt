@@ -112,13 +112,13 @@ set(LJPEG6b_INCLUDES
     ${LJPEG6b_SOURCE_DIR}/transupp.h
 )
 
-add_library(ljpeg16 
+add_library(ljpeg-6b16 
     ${LJPEG6b_LIBSOURCES}
     ${LJPEG6b_SYSDEPSOURCES}
     ${LJPEG6b_CODEC}
     ${LJPEG6b_INCLUDES}
 )
-target_compile_options(ljpeg16 PUBLIC -DBITS_IN_JSAMPLE=12)
-target_compile_options(ljpeg16 PUBLIC "SHELL:-iquote ${CMAKE_CURRENT_SOURCE_DIR}")
-target_compile_options(ljpeg16 PRIVATE ${LJPEG6b_COMPILE_OPTIONS})
-target_include_directories(ljpeg16 PUBLIC "${LJPEG6b_SOURCE_DIR}")
+target_compile_options(ljpeg-6b16 PUBLIC -DBITS_IN_JSAMPLE=12)
+target_compile_options(ljpeg-6b16 PUBLIC "SHELL:-iquote ${CMAKE_CURRENT_SOURCE_DIR}")
+target_compile_options(ljpeg-6b16 PRIVATE ${LJPEG6b_COMPILE_OPTIONS})
+target_include_directories(ljpeg-6b16 PUBLIC "${LJPEG6b_SOURCE_DIR}")
