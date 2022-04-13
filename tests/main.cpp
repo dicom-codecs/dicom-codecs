@@ -1,5 +1,5 @@
 #include <dicomcodecs/codec.hpp>
-
+#include <dicomcodecs/exception.hpp>
 using namespace dicomcodecs;
 using namespace std;
 
@@ -13,6 +13,11 @@ void readFileAndRoundTrip(const string &fileName, const string &codec,
                           double maxAverageDiff = 0.0);
 void benchmark(image &image, const string &comment, const string &codec,
                size_t iterations);
+void benchmarkDecode(const image &image, const string &comment, const string &codec,
+        size_t iterations);
+void benchmarkEncode(const image &image, const string &comment, const string &codec,
+                     size_t iterations);
+
 string makeRawFileName(const char *name, const image &image);
 void writeFile(const string fileName, const vector<uint8_t> &vec);
 string readRawFile(const string filePath, image &image);
@@ -96,26 +101,46 @@ void decodeTests()
     */
 }
 
-void bechmark8bit() {
-    printf("** Running 8 bit Benchmark Tests **\n");
-    image image;
-    readFileAndDecode("extern/test-data/jpeglossy8bit/jpeg400jfif.jpg", "libjpeg-turbo8", image);
-    //readFileAndDecode("extern/test-data/jpeglossless/CT1.JLL", "ljpeg6b", image);
-    //readFileAndDecode("extern/test-data/jpegls/CT1.JLS", "charls", image);
+void testAllCodecs() {
+    printf("** Testing all codecs **\n");
+    try {
+            
+        image image;
+        readFileAndDecode("extern/test-data/jpeglossy8bit/jpeg400jfif.jpg", "libjpeg-turbo8", image);
 
-    printImage(image);
-    size_t iterations = 5;
+        printImage(image);
 
-    benchmark(image, "", "libjpeg-turbo8", iterations);
-    benchmark(image, "", "ljpeg6b16", iterations);
+        roundTrip(image, "libjpeg-turbo8", 2.0);
+        roundTrip(image, "ljpeg6b16");
+        roundTrip(image, "ijg12", 2.0);
+        roundTrip(image, "gdcm-jpeg16", 2.0);
+        roundTrip(image, "charls");
+        roundTrip(image, "openjpeg");
+        //roundTrip(image, "rle");
 
-/*    benchmark(image, "", "charls", iterations);
-    benchmark(image, "", "openjpeg", iterations);
-    benchmark(image, "", "ijg12", iterations);
-    benchmark(image, "", "ljpeg6b", iterations);
-    benchmark(image, "", "rle", iterations);
-    benchmark(image, "", "gdcm-jpeg16", iterations);
-*/
+        size_t iterations = 5;
+        benchmarkDecode(image, "", "libjpeg-turbo8", iterations);
+        benchmarkDecode(image, "", "ljpeg6b16", iterations);
+        benchmarkDecode(image, "", "ijg12", iterations);
+        benchmarkDecode(image, "", "gdcm-jpeg16", iterations);
+        benchmarkDecode(image, "", "charls", iterations);
+        benchmarkDecode(image, "", "openjpeg", iterations);
+        //benchmarkDecode(image, "", "rle", iterations);
+
+        benchmarkEncode(image, "", "libjpeg-turbo8", iterations);
+        benchmarkEncode(image, "", "ljpeg6b16", iterations);
+        benchmarkEncode(image, "", "ijg12", iterations);
+        benchmarkEncode(image, "", "gdcm-jpeg16", iterations);
+        benchmarkEncode(image, "", "charls", iterations);
+        benchmarkEncode(image, "", "openjpeg", iterations);
+        //benchmarkEncode(image, "", "rle", iterations);
+    }
+    catch(dicom_codec_exception& ex) {
+        printf("%s\n", ex.what());
+    }
+    catch(const char*pFoo) {
+        printf("%s\n", pFoo);
+    }
 }
 
 int main(int argc, char **argv)
@@ -125,7 +150,7 @@ int main(int argc, char **argv)
     // makeRawImages();
     // roundTripTests();
     // benchmarkTests();
-    bechmark8bit();
+    testAllCodecs();
     //decodeTests();
     // readFileAndDecode("../../chafey/openjphjs/test/fixtures/j2c/CT1.j2c",
     // "openjpeg", image); // HTJ2K

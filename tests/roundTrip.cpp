@@ -6,6 +6,18 @@ using namespace std;
 
 void printImage(const image &image);
 
+int getPixel(const image &image, int pixelNum) {
+  if(image.bitsPerSample <= 8) {
+    return image.rawBytes[pixelNum];
+  } else {
+    if(image.isSigned) {
+      return *(short*)(image.rawBytes.data() + pixelNum * 2);
+    } else {
+      return *(unsigned short*)(image.rawBytes.data() + pixelNum * 2);
+    }
+  }
+}
+
 void roundTrip(const image &image, const string &codec,
                double maxAverageDiff = 0.0) {
   vector<uint8_t> encodedBytes;
@@ -14,25 +26,27 @@ void roundTrip(const image &image, const string &codec,
   decode(encodedBytes, decodedImage, codec);
   // printImage(decodedImage);
 
-  if (decodedImage != image) {
-    size_t numDifferences = 0;
-    float delta = 0.0f;
-    for (size_t i = 0; i < decodedImage.rawBytes.size(); i++) {
-      if (decodedImage.rawBytes[i] != image.rawBytes[i]) {
-        delta += abs(decodedImage.rawBytes[i] - image.rawBytes[i]);
-        numDifferences++;
-      }
+  size_t numDifferences = 0;
+  float delta = 0.0f;
+  const int numPixels = image.width * image.height * image.componentCount;
+  for (size_t i = 0; i < numPixels; i++) {
+    int originalPixel = getPixel(image, i);
+    int decodedPixel = getPixel(decodedImage, i);
+    if(originalPixel != decodedPixel) {
+      //printf("diff at pixel %d, %d != %d\n", i, originalPixel, decodedPixel);
+      delta += abs(originalPixel - decodedPixel);
+      numDifferences++;
     }
+  }
 
-    const double averageDifference = delta / numDifferences;
-    const double percent =
-        (double)numDifferences / (double)decodedImage.rawBytes.size() * 100.0;
+  const double averageDifference = numDifferences ? delta / numDifferences : 0;
+  const double percent =
+      (double)numDifferences / (double)numPixels * 100.0;
 
-    printf("num differences = %zu/%zu (%0.2f %%), average diff = %0.2f\n",
-           numDifferences, decodedImage.rawBytes.size(), percent,
-           averageDifference);
-    if (averageDifference > maxAverageDiff) {
-      throw("roundtrip did not produce original image");
-    }
+  printf("%s num differences = %zu/%zu (%0.2f %%), average diff = %0.2f\n", codec.c_str(),
+          numDifferences, decodedImage.rawBytes.size(), percent,
+          averageDifference);
+  if (averageDifference > maxAverageDiff) {
+    throw("roundtrip did not produce original image");
   }
 }
