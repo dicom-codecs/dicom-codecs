@@ -12,13 +12,11 @@ using namespace std;
 extern "C" {
 
 GLOBAL(void)
-jpeg_mem_dest (j_compress_ptr cinfo,
-	       unsigned char ** outbuffer, size_t * outsize);
+jpeg_mem_dest(j_compress_ptr cinfo, unsigned char **outbuffer, size_t *outsize);
 }
 
-
-
-void gdcmjpeg16encoder(const image &sourceImage, vector<uint8_t> &encodedBytes) {
+void gdcmjpeg16encoder(const image &sourceImage,
+                       vector<uint8_t> &encodedBytes) {
   int quality = 100;
 
   /* This struct contains the JPEG compression parameters and pointers to

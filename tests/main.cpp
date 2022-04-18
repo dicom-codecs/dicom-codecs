@@ -117,8 +117,7 @@ void testAllCodecs() {
         roundTrip(image, "charls");
         roundTrip(image, "openjpeg");
         roundTrip(image, "openjph");
-
-        //roundTrip(image, "rle");
+        roundTrip(image, "rle");
 
         size_t iterations = 5;
         benchmarkDecode(image, "", "libjpeg-turbo8", iterations);
@@ -128,8 +127,7 @@ void testAllCodecs() {
         benchmarkDecode(image, "", "charls", iterations);
         benchmarkDecode(image, "", "openjpeg", iterations);
         benchmarkDecode(image, "", "openjph", iterations);
-
-        //benchmarkDecode(image, "", "rle", iterations);
+        benchmarkDecode(image, "", "rle", iterations);
 
         benchmarkEncode(image, "", "libjpeg-turbo8", iterations);
         benchmarkEncode(image, "", "ljpeg6b16", iterations);
@@ -138,7 +136,7 @@ void testAllCodecs() {
         benchmarkEncode(image, "", "charls", iterations);
         benchmarkEncode(image, "", "openjpeg", iterations);
         benchmarkEncode(image, "", "openjph", iterations);
-        //benchmarkEncode(image, "", "rle", iterations);
+        benchmarkEncode(image, "", "rle", iterations);
     }
     catch(dicom_codec_exception& ex) {
         printf("%s\n", ex.what());

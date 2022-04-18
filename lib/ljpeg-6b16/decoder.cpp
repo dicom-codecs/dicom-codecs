@@ -10,7 +10,8 @@ using namespace dicomcodecs;
 using namespace std;
 
 extern "C" {
-    void jpeg_memory_src (j_decompress_ptr cinfo, const JOCTET * buffer, size_t bufsize);
+void jpeg_memory_src(j_decompress_ptr cinfo, const JOCTET *buffer,
+                     size_t bufsize);
 }
 struct my_error_mgr {
   struct jpeg_error_mgr pub; /* "public" fields */

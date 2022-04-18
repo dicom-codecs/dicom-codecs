@@ -15,9 +15,9 @@ void openjpegdecoder(const vector<uint8_t> &encodedBytes, image &targetImage);
 void openjpegencoder(const image &sourceImage, vector<uint8_t> &encodedBytes);
 
 void libjpegturbo8decoder(const vector<uint8_t> &encodedBytes,
-                         image &targetImage);
+                          image &targetImage);
 void libjpegturbo8encoder(const image &sourceImage,
-                         vector<uint8_t> &encodedBytes);
+                          vector<uint8_t> &encodedBytes);
 
 void ijg12_decode(const vector<uint8_t> &encodedBytes, image &targetImage);
 void ijg12_encode(const image &sourceImage, vector<uint8_t> &encodedBytes);
@@ -40,22 +40,19 @@ void openjph_encoder(const image &sourceImage, vector<uint8_t> &encodedBytes);
 map<string, decoder_ptr> decoders;
 map<string, encoder_ptr> encoders;
 
-int registerDecoder(const string codec, decoder_ptr decoder)
-{
+int registerDecoder(const string codec, decoder_ptr decoder) {
   printf("decoder registered for %s\n", codec.c_str());
   decoders[codec] = decoder;
   return 0;
 }
 
-int registerEncoder(const string codec, encoder_ptr encoder)
-{
+int registerEncoder(const string codec, encoder_ptr encoder) {
   printf("encoder registered for %s\n", codec.c_str());
   encoders[codec] = encoder;
   return 0;
 }
 
-void init()
-{
+void init() {
 #ifdef DICOM_CODECS_BUILD_CHARLS
   registerDecoder("charls", charlsdecoder);
   registerEncoder("charls", charlsencoder);
@@ -91,13 +88,10 @@ void init()
 #endif
 }
 
-
 void decode(const vector<uint8_t> &encodedBytes, image &targetImage,
-            const string &codec)
-{
+            const string &codec) {
   decoder_ptr decoder = decoders[codec];
-  if (decoder == 0)
-  {
+  if (decoder == 0) {
     throw dicom_codec_exception(codec.c_str(), "Unknown codec");
   }
 
@@ -105,11 +99,9 @@ void decode(const vector<uint8_t> &encodedBytes, image &targetImage,
 }
 
 void encode(const image &sourceImage, vector<uint8_t> &encodedBytes,
-            const string &codec)
-{
+            const string &codec) {
   encoder_ptr encoder = encoders[codec];
-  if (encoder == 0)
-  {
+  if (encoder == 0) {
     throw dicom_codec_exception(codec.c_str(), "Unknown codec");
   }
 

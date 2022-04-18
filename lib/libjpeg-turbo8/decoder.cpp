@@ -7,7 +7,7 @@ using namespace dicomcodecs;
 using namespace std;
 
 void libjpegturbo8decoder(const vector<uint8_t> &encodedBytes,
-                         image &targetImage) {
+                          image &targetImage) {
   tjhandle tjInstance = nullptr;
   if ((tjInstance = tjInitDecompress()) == nullptr) {
     const char *error = tjGetErrorStr2(tjInstance);

@@ -12,10 +12,8 @@ using namespace std;
 extern "C" {
 
 GLOBAL(void)
-jpeg_mem_dest (j_compress_ptr cinfo,
-	       unsigned char ** outbuffer, size_t * outsize);
+jpeg_mem_dest(j_compress_ptr cinfo, unsigned char **outbuffer, size_t *outsize);
 }
-
 
 void ljpeg6b16_encode(const image &sourceImage, vector<uint8_t> &encodedBytes) {
   int quality = 100;
@@ -73,7 +71,7 @@ void ljpeg6b16_encode(const image &sourceImage, vector<uint8_t> &encodedBytes) {
   jpeg_mem_dest(&cinfo, &pData, &outsize);
 
   /* Step 3: set parameters for compression */
-  
+
   /* First we supply a description of the input image.
    * Four fields of the cinfo struct must be filled in:
    */

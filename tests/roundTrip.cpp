@@ -23,6 +23,17 @@ void roundTrip(const image &image, const string &codec,
   vector<uint8_t> encodedBytes;
   encode(image, encodedBytes, codec);
   dicomcodecs::image decodedImage;
+  
+  // Since RLE is not a self-contained format
+  // the decode image object should contain the
+  // image parameters
+  if (codec == "rle") {
+    decodedImage.width = image.width;
+    decodedImage.height = image.height;
+    decodedImage.bitsPerSample = image.bitsPerSample;
+    decodedImage.componentCount = image.componentCount;
+    decodedImage.planarConfiguration = image.planarConfiguration;
+  }
   decode(encodedBytes, decodedImage, codec);
   // printImage(decodedImage);
 
