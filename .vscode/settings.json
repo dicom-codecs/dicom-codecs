@@ -89,6 +89,9 @@
         "thread": "cpp",
         "jconfig.h": "c",
         "jmorecfg.h": "c",
-        "jpeglib.h": "c"
+        "jpeglib.h": "c",
+        "__verbose_abort": "cpp",
+        "charconv": "cpp",
+        "queue": "cpp"
     }
 }

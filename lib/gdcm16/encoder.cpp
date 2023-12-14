@@ -9,14 +9,16 @@
 using namespace dicomcodecs;
 using namespace std;
 
-extern "C" {
+extern "C"
+{
 
-GLOBAL(void)
-jpeg_mem_dest(j_compress_ptr cinfo, unsigned char **outbuffer, size_t *outsize);
+  GLOBAL(void)
+  jpeg_mem_dest(j_compress_ptr cinfo, unsigned char **outbuffer, size_t *outsize);
 }
 
 void gdcmjpeg16encoder(const image &sourceImage,
-                       vector<uint8_t> &encodedBytes) {
+                       vector<uint8_t> &encodedBytes)
+{
   int quality = 100;
 
   /* This struct contains the JPEG compression parameters and pointers to
@@ -80,11 +82,17 @@ void gdcmjpeg16encoder(const image &sourceImage,
   cinfo.image_height = sourceImage.height;
   cinfo.input_components =
       sourceImage.componentCount; /* # of color components per pixel */
-  if (sourceImage.componentCount == 1) {
+  if (sourceImage.componentCount == 1)
+  {
     cinfo.in_color_space = JCS_GRAYSCALE; /* colorspace of input image */
-  } else {
+  }
+  else
+  {
     cinfo.in_color_space = JCS_RGB; /* colorspace of input image */
   }
+  cinfo.lossless = TRUE;
+  cinfo.data_precision = sourceImage.bitsPerSample;
+
   /* Now use the library's routine to set default compression parameters.
    * (You must set at least cinfo.in_color_space before calling this,
    * since the defaults depend on the source color space.)
@@ -116,21 +124,26 @@ void gdcmjpeg16encoder(const image &sourceImage,
   //
   std::vector<unsigned short> rawDataAsShorts;
   unsigned short *pIn;
-  if (sourceImage.bitsPerSample <= 8) {
+  if (sourceImage.bitsPerSample <= 8)
+  {
     size_t numPixels =
         sourceImage.height * sourceImage.width * sourceImage.componentCount;
     rawDataAsShorts.resize(numPixels);
-    for (int i = 0; i < numPixels; i++) {
+    for (int i = 0; i < numPixels; i++)
+    {
       rawDataAsShorts[i] = sourceImage.rawBytes[i];
     }
     pIn = rawDataAsShorts.data();
-  } else {
+  }
+  else
+  {
     pIn = (unsigned short *)sourceImage.rawBytes.data();
   }
 
   row_stride = sourceImage.width * sourceImage.componentCount;
 
-  while (cinfo.next_scanline < cinfo.image_height) {
+  while (cinfo.next_scanline < cinfo.image_height)
+  {
     /* jpeg_write_scanlines expects an array of pointers to scanlines.
      * Here the array is only one element long, but you could pass
      * more than one scanline at a time if that's more convenient.

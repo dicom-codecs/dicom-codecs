@@ -8,16 +8,18 @@
 using namespace dicomcodecs;
 using namespace std;
 
-extern "C" {
-extern void jpeg_memory_src(j_decompress_ptr cinfo, const JOCTET *buffer,
-                            size_t bufsize);
+extern "C"
+{
+  extern void jpeg_memory_src(j_decompress_ptr cinfo, const JOCTET *buffer,
+                              size_t bufsize);
 }
 
 extern JSAMPLE *image_buffer; /* Points to large array of R,G,B-order data */
 extern int image_height;      /* Number of rows in image */
 extern int image_width;       /* Number of columns in image */
 
-struct my_error_mgr {
+struct my_error_mgr
+{
   struct jpeg_error_mgr pub; /* "public" fields */
 
   jmp_buf setjmp_buffer; /* for return to caller */
@@ -30,7 +32,8 @@ typedef struct my_error_mgr *my_error_ptr;
  */
 
 METHODDEF(void)
-my_error_exit(j_common_ptr cinfo) {
+my_error_exit(j_common_ptr cinfo)
+{
   printf("my_error_exit\n");
   /* cinfo->err really points to a my_error_mgr struct, so coerce pointer */
   my_error_ptr myerr = (my_error_ptr)cinfo->err;
@@ -44,7 +47,8 @@ my_error_exit(j_common_ptr cinfo) {
 }
 
 void gdcmjpeg16decoder(const vector<uint8_t> &encodedBytes,
-                       image &targetImage) {
+                       image &targetImage)
+{
   /* This struct contains the JPEG decompression parameters and pointers to
    * working space (which is allocated as needed by the JPEG library).
    */
@@ -71,7 +75,8 @@ void gdcmjpeg16decoder(const vector<uint8_t> &encodedBytes,
   cinfo.err = jpeg_std_error(&jerr.pub);
   jerr.pub.error_exit = my_error_exit;
   /* Establish the setjmp return context for my_error_exit to use. */
-  if (setjmp(jerr.setjmp_buffer)) {
+  if (setjmp(jerr.setjmp_buffer))
+  {
     printf("setjmp\n");
     /* If we get here, the JPEG code has signaled an error.
      * We need to clean up the JPEG object, close the input file, and return.
@@ -110,7 +115,7 @@ void gdcmjpeg16decoder(const vector<uint8_t> &encodedBytes,
 
   targetImage.width = cinfo.output_width;
   targetImage.height = cinfo.output_height;
-  targetImage.bitsPerSample = 16;
+  targetImage.bitsPerSample = cinfo.data_precision;
   targetImage.componentCount = cinfo.num_components;
   targetImage.isSigned = false;
 
@@ -137,7 +142,8 @@ void gdcmjpeg16decoder(const vector<uint8_t> &encodedBytes,
   /* Here we use the library's state variable cinfo.output_scanline as the
    * loop counter, so that we don't have to keep track ourselves.
    */
-  while (cinfo.output_scanline < cinfo.output_height) {
+  while (cinfo.output_scanline < cinfo.output_height)
+  {
     /* jpeg_read_scanlines expects an array of pointers to scanlines.
      * Here the array is only one element long, but you could ask for
      * more than one scanline at a time if that's more convenient.

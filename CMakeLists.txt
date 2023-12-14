@@ -1,10 +1,11 @@
 cmake_minimum_required(VERSION 3.15)
 
-project(dicomcodecs, 
-    LANGUAGES C CXX)
+project(dicomcodecs,
+  LANGUAGES C CXX)
 
 # set the build type if not specified
 set(default_build_type "Release")
+
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   message(STATUS "Setting build type to '${default_build_type}' as none was specified.")
   set(CMAKE_BUILD_TYPE "${default_build_type}")
@@ -24,15 +25,15 @@ option(DICOM_CODECS_BUILD_RLE "Build RLE" ON)
 option(DICOM_CODECS_BUILD_LJPEG6B16 "Build ljpeg-6b 16 bit Codec" ON)
 option(DICOM_CODECS_GDCM_JPEG16 "Build GDCM JPEG16 Codec" ON)
 option(DICOM_CODECS_OPENJPH "Build OpenJPH Codec" ON)
+option(DICOM_CODECS_KAKADU "Build Kakadu Codec" ON)
 
 if(DICOM_CODECS_BUILD_OPENJPEG)
   add_subdirectory(lib/openjpeg EXCLUDE_FROM_ALL)
 
-  #option(OPJ_USE_THREAD "Build with thread/mutex support " OFF)
-  #add_subdirectory(extern/openjpeg EXCLUDE_FROM_ALL)
-  #set(EXECUTABLE_OUTPUT_PATH "")
-  #set(LIBRARY_OUTPUT_PATH "")  
-
+  # option(OPJ_USE_THREAD "Build with thread/mutex support " OFF)
+  # add_subdirectory(extern/openjpeg EXCLUDE_FROM_ALL)
+  # set(EXECUTABLE_OUTPUT_PATH "")
+  # set(LIBRARY_OUTPUT_PATH "")
 endif(DICOM_CODECS_BUILD_OPENJPEG)
 
 if(DICOM_CODECS_BUILD_CHARLS)
@@ -61,21 +62,18 @@ if(DICOM_CODECS_GDCM_JPEG16)
 endif()
 
 if(DICOM_CODECS_OPENJPH)
-add_subdirectory(extern/OpenJPH EXCLUDE_FROM_ALL)
-add_subdirectory(lib/openjph EXCLUDE_FROM_ALL)
+  add_subdirectory(extern/OpenJPH EXCLUDE_FROM_ALL)
+  add_subdirectory(lib/openjph EXCLUDE_FROM_ALL)
 endif()
 
-
-
+if(DICOM_CODECS_KAKADU)
+  add_subdirectory(extern/Kakadu EXCLUDE_FROM_ALL)
+  add_subdirectory(lib/kakadu EXCLUDE_FROM_ALL)
+endif()
 
 # The compiled library code is here
 add_subdirectory(src)
 
 # The executable code is here
-#add_subdirectory(apps)
-
+# add_subdirectory(apps)
 add_subdirectory(tests)
-
-
-
-
