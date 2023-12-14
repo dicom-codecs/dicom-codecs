@@ -51,7 +51,9 @@ WIP - do not use yet
 - ljpeg6b16
   - JPEG Lossless, Nonhierarchical (Processes 14) (1.2.840.10008.1.2.4.57)
 
-## Becnhmark Results
+## Benchmark Results
+
+Apple MacBook Pro M1 Pro:
 
 ```
 ** Testing all codecs 8 bit color US**
