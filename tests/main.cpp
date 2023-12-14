@@ -35,7 +35,7 @@ void testCodecs(const char *filePath, const std::vector<std::string> &codecs, do
 
         for (std::string codec : codecs)
         {
-            // roundTrip(image, codec, maxAverageDiff);
+            roundTrip(image, codec, maxAverageDiff);
         }
         for (std::string codec : codecs)
         {
@@ -43,7 +43,7 @@ void testCodecs(const char *filePath, const std::vector<std::string> &codecs, do
         }
         for (std::string codec : codecs)
         {
-            // benchmarkEncode(image, "", codec, iterations);
+            benchmarkEncode(image, "", codec, iterations);
         }
     }
     catch (dicom_codec_exception &ex)
@@ -86,7 +86,6 @@ void testAllCodecs16BitGrayCT(size_t iterations = 5)
     printf("** Testing all codecs 16 bit gray CT**\n");
     // gdcm-jpeg16 broken for signed?
     // std::vector<std::string> codecs{"gdcm-jpeg16"};
-    // std::vector<std::string> codecs{"ljpeg6b16"};
     std::vector<std::string> codecs{"openjpeg", "openjph", "rle", "kakadu", "charls"};
     testCodecs("extern/test-data/raw/CT1-512-512-1-16-1.raw", codecs, 0.0, iterations);
 }
