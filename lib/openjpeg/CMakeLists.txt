@@ -1,5 +1,5 @@
 # disable threading
-add_definitions( -DMUTEX_stub)
+add_definitions(-DMUTEX_stub)
 
 set(OPENJP2_COMPILE_OPTIONS ${OPENJP2_COMPILE_OPTIONS} "$<$<CONFIG:Release>:-ffast-math>" -Wall -Wextra -Wconversion -Wunused-parameter -Wdeclaration-after-statement -Werror=declaration-after-statement)
 
@@ -51,17 +51,17 @@ set(OPENJPEG_SRCS
   ${OPENJPEG_SOURCE_DIR}/opj_intmath.h
   ${OPENJPEG_SOURCE_DIR}/opj_malloc.c
   ${OPENJPEG_SOURCE_DIR}/opj_malloc.h
-  ${OPENJPEG_SOURCE_DIR}/opj_stdint.h
+
+  # ${OPENJPEG_SOURCE_DIR}/opj_stdint.h
   ${OPENJPEG_SOURCE_DIR}/sparse_array.c
   ${OPENJPEG_SOURCE_DIR}/sparse_array.h
 )
 
-add_library(openjp2 
-    ${HEADER_LIST}
-    ${OPENJPEG_SRCS} 
+add_library(openjp2
+  ${HEADER_LIST}
+  ${OPENJPEG_SRCS}
 )
 
 target_compile_options(openjp2 PUBLIC "SHELL:-iquote ${CMAKE_CURRENT_SOURCE_DIR}")
 target_compile_options(openjp2 PRIVATE ${OPENJP2_COMPILE_OPTIONS})
-target_include_directories(openjp2 PUBLIC "${PROJECT_SOURCE_DIR}/extern/openjpeg/src/lib/openjp2" )
-
+target_include_directories(openjp2 PUBLIC "${PROJECT_SOURCE_DIR}/extern/openjpeg/src/lib/openjp2")
